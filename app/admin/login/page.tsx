@@ -1,17 +1,20 @@
-import { Suspense } from "react";
 import { ShieldCheck } from "lucide-react";
 import { AuthForm } from "@/components/admin/auth-form";
 import { SectionHeading } from "@/components/section-heading";
 
-function AuthFormFallback() {
-  return (
-    <div className="rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-500">
-      Loading login form...
-    </div>
-  );
-}
+export default async function AdminLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const error = params?.error;
 
-export default function AdminLoginPage() {
+  const initialError =
+    error === "unauthorized"
+      ? "Your email is not authorized as an admin yet."
+      : "";
+
   return (
     <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="rounded-[36px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
@@ -24,9 +27,7 @@ export default function AdminLoginPage() {
           <ShieldCheck className="mt-2 h-10 w-10 text-slate-400" />
         </div>
 
-        <Suspense fallback={<AuthFormFallback />}>
-          <AuthForm />
-        </Suspense>
+        <AuthForm initialError={initialError} />
       </div>
     </section>
   );
