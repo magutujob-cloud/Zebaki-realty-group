@@ -1,0 +1,59 @@
+import Link from "next/link";
+import { BRAND, CITIES } from "@/lib/constants";
+import { getWhatsappLink } from "@/lib/utils";
+
+export function SiteFooter() {
+  return (
+    <footer className="mt-16 border-t border-slate-200 bg-white">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.2fr_0.9fr_0.9fr_1.1fr] lg:px-8">
+        <div>
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-lg font-semibold text-white">
+              ZR
+            </div>
+            <div>
+              <p className="font-semibold text-slate-950">{BRAND.name}</p>
+              <p className="text-sm text-slate-500">{BRAND.tagline}</p>
+            </div>
+          </div>
+          <p className="mt-4 max-w-md text-sm leading-7 text-slate-600">
+            A production-ready real-estate starter built for homes, land, rentals, and property management across Kenya.
+          </p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-slate-950">Quick links</p>
+          <div className="mt-4 space-y-3 text-sm text-slate-600">
+            <Link href="/">Home</Link>
+            <Link href="/properties" className="block">Listings</Link>
+            <Link href="/services" className="block">Services</Link>
+            <Link href="/agents" className="block">Agents</Link>
+            <Link href="/blog" className="block">Insights</Link>
+            <Link href="/contact" className="block">Contact</Link>
+          </div>
+        </div>
+
+        <div>
+          <p className="font-semibold text-slate-950">Coverage</p>
+          <div className="mt-4 space-y-3 text-sm text-slate-600">
+            {CITIES.map((city) => (
+              <Link key={city} href={`/areas/${city.toLowerCase()}`} className="block">
+                {city}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p className="font-semibold text-slate-950">Contact</p>
+          <div className="mt-4 space-y-3 text-sm text-slate-600">
+            <a href={`tel:${BRAND.phone}`} className="block">{BRAND.displayPhone}</a>
+            <a href={`mailto:${BRAND.email}`} className="block break-all">{BRAND.email}</a>
+            <a href={getWhatsappLink("Hello Zebaki Realty Group.")} target="_blank" rel="noreferrer" className="block">WhatsApp chat</a>
+            <p>Nairobi HQ</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

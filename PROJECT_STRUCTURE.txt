@@ -1,0 +1,43 @@
+app/
+  admin/
+    (dashboard)/
+      page.tsx
+      listings/new/page.tsx
+      listings/[id]/edit/page.tsx
+      agents/new/page.tsx
+      agents/[id]/edit/page.tsx
+      blog/new/page.tsx
+      blog/[id]/edit/page.tsx
+      layout.tsx
+    login/page.tsx
+  areas/[city]/page.tsx
+  blog/page.tsx
+  blog/[slug]/page.tsx
+  contact/page.tsx
+  properties/page.tsx
+  properties/[slug]/page.tsx
+  services/page.tsx
+  actions/public.ts
+  layout.tsx
+  page.tsx
+components/
+  admin/
+  contact-form.tsx
+  mortgage-calculator.tsx
+  property-card.tsx
+  search-shell.tsx
+  section-heading.tsx
+  site-footer.tsx
+  site-header.tsx
+lib/
+  auth.ts
+  constants.ts
+  queries.ts
+  types.ts
+  utils.ts
+  supabase/
+supabase/
+  schema.sql
+  seed.sql
+proxy.ts
+README.md
