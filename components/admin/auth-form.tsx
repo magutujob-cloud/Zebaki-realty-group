@@ -28,8 +28,8 @@ export function AuthForm() {
       return;
     }
 
-    router.push("/admin");
-    router.refresh();
+    window.location.href = "/admin";
+    
   }
 
   return (
