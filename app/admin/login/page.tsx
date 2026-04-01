@@ -1,6 +1,15 @@
+import { Suspense } from "react";
 import { ShieldCheck } from "lucide-react";
 import { AuthForm } from "@/components/admin/auth-form";
 import { SectionHeading } from "@/components/section-heading";
+
+function AuthFormFallback() {
+  return (
+    <div className="rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-500">
+      Loading login form...
+    </div>
+  );
+}
 
 export default function AdminLoginPage() {
   return (
@@ -14,7 +23,10 @@ export default function AdminLoginPage() {
           />
           <ShieldCheck className="mt-2 h-10 w-10 text-slate-400" />
         </div>
-        <AuthForm />
+
+        <Suspense fallback={<AuthFormFallback />}>
+          <AuthForm />
+        </Suspense>
       </div>
     </section>
   );
