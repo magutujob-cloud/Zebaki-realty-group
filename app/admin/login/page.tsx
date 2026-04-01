@@ -1,19 +1,10 @@
+import { connection } from "next/server";
 import { ShieldCheck } from "lucide-react";
 import { AuthForm } from "@/components/admin/auth-form";
 import { SectionHeading } from "@/components/section-heading";
 
-export default async function AdminLoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const params = await searchParams;
-  const error = params?.error;
-
-  const initialError =
-    error === "unauthorized"
-      ? "Your email is not authorized as an admin yet."
-      : "";
+export default async function AdminLoginPage() {
+  await connection();
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
@@ -27,7 +18,7 @@ export default async function AdminLoginPage({
           <ShieldCheck className="mt-2 h-10 w-10 text-slate-400" />
         </div>
 
-        <AuthForm initialError={initialError} />
+        <AuthForm />
       </div>
     </section>
   );
