@@ -191,7 +191,7 @@ export default async function HomePage() {
               <Link href="/contact" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">
                 Talk to our team
               </Link>
-              <a href="mailto:magutuhjob@gmail.com?subject=Property%20listing%20request" className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">
+              <a href="mailto:magutujob@gmail.com?subject=Property%20listing%20request" className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">
                 Email us
               </a>
             </div>
