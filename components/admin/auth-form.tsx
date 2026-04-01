@@ -4,10 +4,10 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/browser";
 
-export function AuthForm({ initialError = "" }: { initialError?: string }) {
+export function AuthForm() {
   const supabase = createClient();
   const router = useRouter();
-  const [error, setError] = useState(initialError);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
