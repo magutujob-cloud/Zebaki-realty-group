@@ -1,14 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BarChart3, Building2, Handshake, HousePlus, Map, MessageCircle, Search, ShieldCheck } from "lucide-react";
-import { getFeaturedListings, getPublishedListings } from "@/lib/queries";
+import { getAllAgents, getFeaturedListings, getPublishedListings } from "@/lib/queries";
 import { SectionHeading } from "@/components/section-heading";
 import { PropertyCard } from "@/components/property-card";
 import { CITIES } from "@/lib/constants";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
-import { getWhatsappLink } from "@/lib/utils";
+import { getWhatsappLink, splitPeople } from "@/lib/utils";
 
 export default async function HomePage() {
-  const [featuredListings, listings] = await Promise.all([getFeaturedListings(), getPublishedListings()]);
+  const [featuredListings, listings, people] = await Promise.all([
+    getFeaturedListings(),
+    getPublishedListings(),
+    getAllAgents(),
+  ]);
+  const { leadership } = splitPeople(people);
 
   return (
     <>
@@ -135,8 +141,8 @@ export default async function HomePage() {
             {[
               { icon: Search, title: "Search-first experience", text: "Search, filters, maps, and clear separation between homes, land, rentals, and management." },
               { icon: ShieldCheck, title: "Admin-protected CMS", text: "Admin login is handled with Supabase Auth and row-level security, not local browser storage." },
-              { icon: HousePlus, title: "Real backend", text: "Listings, agents, blog posts, inquiries, and storage are backed by Supabase tables and policies." },
-              { icon: Handshake, title: "Commercial fit", text: "The site helps acquire buyers, tenants, owners, and management clients in one experience." },
+              { icon: HousePlus, title: "Production-ready backend", text: "Listings, agents, blog posts, inquiries, and images can be managed inside Supabase." },
+              { icon: Handshake, title: "Owner and tenant journeys", text: "The site supports property sales, rental inquiries, and property management lead generation." },
             ].map((item) => (
               <div key={item.title} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
                 <item.icon className="h-8 w-8 text-slate-500" />
@@ -149,34 +155,53 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <SectionHeading eyebrow="Locations" title="Browse by city" body="Each city can function as its own SEO landing page with local listings, market notes, and a clear inquiry path." />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
-          {CITIES.map((city) => {
-            const count = listings.filter((listing) => listing.city === city).length;
-            return (
-              <Link key={city} href={`/areas/${city.toLowerCase()}`} className="rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-1">
-                <p className="text-lg font-semibold text-slate-950">{city}</p>
-                <p className="mt-2 text-sm text-slate-500">{count} live listing{count === 1 ? "" : "s"}</p>
-              </Link>
-            );
-          })}
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <SectionHeading
+            eyebrow="Leadership"
+            title="Meet the CEO and directors"
+            body="This section is powered by the same People database as your agents. Anyone whose role contains CEO, Director, Founder, Managing Director, Chair, or Head of will show here automatically."
+          />
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {leadership.length > 0 ? leadership.slice(0, 3).map((person) => (
+              <div key={person.id} className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
+                <Image
+                  src={person.image_url || "https://placehold.co/800x800?text=Leadership+Photo"}
+                  alt={person.full_name}
+                  width={800}
+                  height={800}
+                  className="h-72 w-full object-cover"
+                />
+                <div className="space-y-3 p-6">
+                  <div>
+                    <h3 className="text-xl font-semibold text-slate-950">{person.full_name}</h3>
+                    <p className="mt-1 text-sm text-slate-500">{person.role}</p>
+                  </div>
+                  <p className="text-sm leading-7 text-slate-600">{person.bio}</p>
+                </div>
+              </div>
+            )) : (
+              <div className="rounded-[28px] border border-dashed border-slate-300 bg-white p-8 text-sm leading-7 text-slate-600 md:col-span-2 xl:col-span-3">
+                Add your CEO and directors from <strong>Admin → New agent</strong>. Use role titles like <strong>CEO</strong>, <strong>Director</strong>, or <strong>Managing Director</strong> and they will appear here automatically.
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <MortgageCalculator />
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <SectionHeading
               eyebrow="Seller & owner CTA"
               title="Need to sell, let, or manage a property?"
-              body="Use the same platform to win inventory and management mandates, not just buyer leads."
+              body="Use this section to attract owners as well as buyers. That is especially important because property management and listings supply compound over time."
             />
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {[
                 { icon: Building2, title: "List your property", text: "Show homes, land, and commercial spaces to qualified buyers and tenants." },
                 { icon: HousePlus, title: "Rental support", text: "Let us help place tenants and market vacancies faster." },
-                { icon: ShieldCheck, title: "Property management", text: "Collections, tenant support, maintenance coordination, and owner reporting." },
+                { icon: ShieldCheck, title: "Property management", text: "Rent collection, tenant support, maintenance coordination, and reporting." },
                 { icon: BarChart3, title: "Investment advisory", text: "Guidance on land, homes, and mixed-use opportunities across priority cities." },
               ].map((item) => (
                 <div key={item.title} className="rounded-2xl bg-slate-50 p-4">
@@ -186,14 +211,9 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
-
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/contact" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">
-                Talk to our team
-              </Link>
-              <a href="mailto:magutujob@gmail.com?subject=Property%20listing%20request" className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">
-                Email us
-              </a>
+              <Link href="/contact" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">Talk to our team</Link>
+              <a href="mailto:magutujob@gmail.com?subject=Property%20listing%20request" className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">Email us</a>
             </div>
           </div>
         </div>
