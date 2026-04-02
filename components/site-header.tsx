@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Heart, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 import { getWhatsappLink, cn } from "@/lib/utils";
+import { LogoMark } from "@/components/logo-mark";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -22,15 +23,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-lg font-semibold text-white">
-            ZR
-          </div>
-          <div>
-            <p className="font-semibold text-slate-950">{BRAND.name}</p>
-            <p className="text-sm text-slate-500">{BRAND.tagline}</p>
-          </div>
-        </Link>
+        <LogoMark />
 
         <nav className="hidden items-center gap-6 lg:flex">
           {nav.map((item) => (

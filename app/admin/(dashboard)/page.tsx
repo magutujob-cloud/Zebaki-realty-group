@@ -65,7 +65,7 @@ export default async function AdminDashboardPage() {
 
       <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-slate-950">Agents</h2>
+          <div><h2 className="text-xl font-semibold text-slate-950">Agents & leadership</h2><p className="mt-1 text-sm text-slate-500">Use role titles like CEO or Director to make people appear in the public Leadership Team section automatically.</p></div>
           <Link href="/admin/agents/new" className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white">Add agent</Link>
         </div>
         <div className="grid gap-4 md:grid-cols-2">

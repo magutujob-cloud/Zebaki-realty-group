@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import type { Agent } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -50,4 +51,29 @@ export function mapEmbedUrl(query: string) {
 
 export function getWhatsappLink(message: string) {
   return `https://wa.me/254742370125?text=${encodeURIComponent(message)}`;
+}
+
+const leadershipKeywords = [
+  "ceo",
+  "chief executive",
+  "director",
+  "managing director",
+  "executive director",
+  "founder",
+  "co-founder",
+  "chair",
+  "chairperson",
+  "head of",
+  "principal",
+];
+
+export function isLeadershipRole(role?: string | null) {
+  const normalized = (role || "").toLowerCase();
+  return leadershipKeywords.some((keyword) => normalized.includes(keyword));
+}
+
+export function splitPeople(agents: Agent[]) {
+  const leadership = agents.filter((agent) => isLeadershipRole(agent.role));
+  const agentsOnly = agents.filter((agent) => !isLeadershipRole(agent.role));
+  return { leadership, agents: agentsOnly };
 }

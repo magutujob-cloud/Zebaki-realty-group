@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function getSessionUser() {
   const supabase = await createClient();
@@ -18,15 +17,13 @@ export async function requireAdmin() {
     redirect("/admin/login");
   }
 
-  const admin = createAdminClient();
-
-  const { data: adminRow, error } = await admin
+  const { data: adminRow } = await supabase
     .from("admin_users")
     .select("email")
-    .ilike("email", user.email)
+    .eq("email", user.email.toLowerCase())
     .maybeSingle();
 
-  if (error || !adminRow) {
+  if (!adminRow) {
     redirect("/admin/login?error=unauthorized");
   }
 

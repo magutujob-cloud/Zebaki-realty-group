@@ -53,13 +53,13 @@ This creates:
 
 The schema also seeds the admin allowlist with:
 
-- `magutuhjob@gmail.com`
+- `magutujob@gmail.com`
 
 ## 3) Create your admin auth user
 
 In Supabase:
 - go to **Authentication**
-- create a user with the same email: `magutuhjob@gmail.com`
+- create a user with the same email: `magutujob@gmail.com`
 - set a password
 
 That email is already allowlisted in `admin_users`, so once the auth user exists, it can sign in at:

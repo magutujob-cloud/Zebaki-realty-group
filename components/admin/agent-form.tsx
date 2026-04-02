@@ -12,6 +12,9 @@ export function AgentForm({ action, initialData, submitLabel }: Props) {
   return (
     <form action={action} className="space-y-5 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       {initialData?.id ? <input type="hidden" name="id" value={initialData.id} /> : null}
+      <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">
+        Use this form for both <strong>agents</strong> and <strong>leadership</strong>. If the role includes <strong>CEO</strong>, <strong>Director</strong>, <strong>Founder</strong>, <strong>Managing Director</strong>, or <strong>Head of</strong>, the person will automatically appear in the Leadership Team section of the site.
+      </div>
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block text-sm text-slate-700">
           <span className="mb-2 block font-medium">Full name</span>
@@ -19,7 +22,7 @@ export function AgentForm({ action, initialData, submitLabel }: Props) {
         </label>
         <label className="block text-sm text-slate-700">
           <span className="mb-2 block font-medium">Role</span>
-          <input name="role" defaultValue={initialData?.role || ""} required className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
+          <input name="role" defaultValue={initialData?.role || ""} required className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" placeholder="e.g. CEO, Sales Agent, Director" />
         </label>
         <label className="block text-sm text-slate-700">
           <span className="mb-2 block font-medium">City</span>
