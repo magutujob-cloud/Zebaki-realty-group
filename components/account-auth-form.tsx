@@ -24,9 +24,16 @@ export function AccountAuthForm({ mode = "signup" }: Props) {
     const fullName = String(formData.get("full_name") || "");
     const email = String(formData.get("email") || "");
     const password = String(formData.get("password") || "");
+    const confirmPassword = String(formData.get("confirm_password") || "");
+
+    if (currentMode === "signup" && password !== confirmPassword) {
+      setLoading(false);
+      setError("Passwords do not match.");
+      return;
+    }
 
     if (currentMode === "signup") {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -43,7 +50,18 @@ export function AccountAuthForm({ mode = "signup" }: Props) {
         return;
       }
 
-      setMessage("Account created. If email confirmation is enabled in Supabase, check your inbox before signing in.");
+      if (data.session) {
+        window.location.href = "/account";
+        return;
+      }
+
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        setMessage("That email may already belong to an account. Try signing in instead, or reset the password from Supabase Auth if needed.");
+        setCurrentMode("signin");
+        return;
+      }
+
+      setMessage("Account created. If email confirmation is enabled in Supabase, open the confirmation email first, then sign in.");
       return;
     }
 
@@ -94,6 +112,13 @@ export function AccountAuthForm({ mode = "signup" }: Props) {
           <span className="mb-2 block font-medium">Password</span>
           <input name="password" type="password" required className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
         </label>
+
+        {currentMode === "signup" ? (
+          <label className="block text-sm text-slate-700">
+            <span className="mb-2 block font-medium">Confirm password</span>
+            <input name="confirm_password" type="password" required className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
+          </label>
+        ) : null}
 
         {error ? <p className="rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p> : null}
         {message ? <p className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</p> : null}

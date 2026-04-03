@@ -8,6 +8,7 @@ import { getCustomerSession } from "@/lib/auth";
 import { formatKES, getWhatsappLink, mapEmbedUrl } from "@/lib/utils";
 import { BRAND } from "@/lib/constants";
 import { PropertyCard } from "@/components/property-card";
+import { PropertyGallery } from "@/components/property-gallery";
 
 export default async function PropertyDetailPage({
   params,
@@ -34,18 +35,7 @@ export default async function PropertyDetailPage({
 
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <Image
-            src={gallery[0] || "https://placehold.co/1200x800?text=Property+Photo"}
-            alt={listing.title}
-            width={1400}
-            height={900}
-            className="h-[420px] w-full rounded-[32px] object-cover shadow-sm"
-          />
-          <div className="mt-4 grid gap-4 sm:grid-cols-3">
-            {gallery.slice(0, 3).map((image) => (
-              <Image key={image} src={image || "https://placehold.co/1200x800?text=Property+Photo"} alt={listing.title} width={800} height={600} className="h-32 w-full rounded-[24px] object-cover" />
-            ))}
-          </div>
+          <PropertyGallery images={gallery} title={listing.title} />
 
           <div className="mt-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
