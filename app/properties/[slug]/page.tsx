@@ -4,14 +4,24 @@ import { CalendarDays, Download, MapPin, MessageCircle, Phone } from "lucide-rea
 import { ContactForm } from "@/components/contact-form";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import { getListingBySlug, getPublishedListings } from "@/lib/queries";
+import { getCustomerSession } from "@/lib/auth";
 import { formatKES, getWhatsappLink, mapEmbedUrl } from "@/lib/utils";
 import { BRAND } from "@/lib/constants";
 import { PropertyCard } from "@/components/property-card";
 
-export default async function PropertyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PropertyDetailPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { slug } = await params;
+  const query = await searchParams;
   const listing = await getListingBySlug(slug);
   const related = (await getPublishedListings()).filter((item) => item.city === listing.city && item.id !== listing.id).slice(0, 3);
+  const { user, profile } = await getCustomerSession();
+  const success = query.success === "1";
 
   const gallery = listing.gallery_urls?.length ? listing.gallery_urls : [listing.cover_image_url].filter(Boolean);
   const brochureHref = `mailto:${BRAND.email}?subject=${encodeURIComponent(`Brochure request - ${listing.title}`)}&body=${encodeURIComponent(`Hello Serena Property Group,\n\nPlease send me the brochure for ${listing.title} in ${listing.area}, ${listing.city}.`)}`;
@@ -104,8 +114,28 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
               Use the form below to ask about availability, a viewing, or related options.
             </p>
+            {success ? (
+              <div className="mt-4 rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                Your inquiry has been submitted successfully.
+              </div>
+            ) : null}
+            {!user ? (
+              <div className="mt-4 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                Create a client account if you want to track this inquiry from your dashboard later.
+              </div>
+            ) : null}
             <div className="mt-6">
-              <ContactForm listingId={listing.id} />
+              <ContactForm
+                listingId={listing.id}
+                returnTo={`/properties/${listing.slug}`}
+                signedIn={Boolean(user)}
+                defaultValues={{
+                  full_name: profile?.full_name,
+                  email: profile?.email || user?.email || null,
+                  phone: profile?.phone,
+                  city: profile?.city,
+                }}
+              />
             </div>
           </div>
         </div>

@@ -55,6 +55,8 @@ export type BlogPost = {
 
 export type Inquiry = {
   id: string;
+  customer_id?: string | null;
+  listing_id?: string | null;
   full_name: string;
   email: string;
   phone: string | null;
@@ -64,4 +66,24 @@ export type Inquiry = {
   message: string;
   status: string | null;
   created_at: string;
+};
+
+export type CustomerProfile = {
+  id: string;
+  email: string;
+  full_name: string | null;
+  phone: string | null;
+  city: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type InquiryWithListing = Inquiry & {
+  listings?: {
+    id: string;
+    title: string;
+    slug: string;
+    city: string;
+    area: string;
+  } | null;
 };

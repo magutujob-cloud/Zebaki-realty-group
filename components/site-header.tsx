@@ -6,6 +6,7 @@ import { Heart, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 import { getWhatsappLink, cn } from "@/lib/utils";
 import { LogoMark } from "@/components/logo-mark";
+import { SignOutButton } from "@/components/admin/sign-out-button";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -17,7 +18,11 @@ const nav = [
   { href: "/admin", label: "Admin" },
 ];
 
-export function SiteHeader() {
+type Props = {
+  isSignedIn?: boolean;
+};
+
+export function SiteHeader({ isSignedIn = false }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,6 +39,21 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          {isSignedIn ? (
+            <Link
+              href="/account"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+            >
+              My inquiries
+            </Link>
+          ) : (
+            <Link
+              href="/account/login"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+            >
+              Create account
+            </Link>
+          )}
           <Link
             href="/properties"
             className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
@@ -50,6 +70,12 @@ export function SiteHeader() {
             <MessageCircle className="h-4 w-4" />
             WhatsApp
           </a>
+          {isSignedIn ? (
+            <SignOutButton
+              redirectTo="/"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+            />
+          ) : null}
         </div>
 
         <button
@@ -74,6 +100,15 @@ export function SiteHeader() {
           </div>
 
           <div className="space-y-3">
+            {isSignedIn ? (
+              <Link href="/account" onClick={() => setOpen(false)} className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium text-slate-900">
+                My inquiries
+              </Link>
+            ) : (
+              <Link href="/account/login" onClick={() => setOpen(false)} className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium text-slate-900">
+                Create account
+              </Link>
+            )}
             {nav.map((item) => (
               <Link
                 key={item.href}
@@ -87,6 +122,12 @@ export function SiteHeader() {
           </div>
 
           <div className="mt-auto space-y-3 pt-8">
+            {isSignedIn ? (
+              <SignOutButton
+                redirectTo="/"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
+              />
+            ) : null}
             <a
               href={`tel:${BRAND.phone}`}
               className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"

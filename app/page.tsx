@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BarChart3, Building2, Handshake, HousePlus, Map, MessageCircle, Search, ShieldCheck } from "lucide-react";
+import { BarChart3, Building2, Handshake, HousePlus, Map, Search, ShieldCheck } from "lucide-react";
 import { getAllAgents, getFeaturedListings, getPublishedListings } from "@/lib/queries";
 import { SectionHeading } from "@/components/section-heading";
 import { PropertyCard } from "@/components/property-card";
 import { CITIES } from "@/lib/constants";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
-import { getWhatsappLink, splitPeople } from "@/lib/utils";
+import { splitPeople } from "@/lib/utils";
+import { HomeSearchForm } from "@/components/home-search-form";
 
 export default async function HomePage() {
   const [featuredListings, listings, people] = await Promise.all([
@@ -31,56 +32,7 @@ export default async function HomePage() {
               Serena Property Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Mombasa, Nyeri, and Eldoret.
             </p>
 
-            <form action="/properties" className="mt-8 rounded-[28px] bg-white p-4 text-slate-950 sm:p-5">
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                <label className="block text-sm text-slate-700">
-                  <span className="mb-2 block font-medium">Keyword</span>
-                  <input name="q" placeholder="House, land, area..." className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
-                </label>
-                <label className="block text-sm text-slate-700">
-                  <span className="mb-2 block font-medium">City</span>
-                  <select name="city" defaultValue="All cities" className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400">
-                    <option>All cities</option>
-                    {CITIES.map((city) => <option key={city}>{city}</option>)}
-                  </select>
-                </label>
-                <label className="block text-sm text-slate-700">
-                  <span className="mb-2 block font-medium">Property type</span>
-                  <select name="type" defaultValue="All types" className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400">
-                    <option>All types</option>
-                    <option>House</option>
-                    <option>Apartment</option>
-                    <option>Land</option>
-                    <option>Commercial</option>
-                  </select>
-                </label>
-                <label className="block text-sm text-slate-700">
-                  <span className="mb-2 block font-medium">Purpose</span>
-                  <select name="purpose" defaultValue="All purposes" className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400">
-                    <option>All purposes</option>
-                    <option>Sale</option>
-                    <option>Rent</option>
-                    <option>Manage</option>
-                  </select>
-                </label>
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white">
-                  <Search className="h-4 w-4" />
-                  Search properties
-                </button>
-                <a
-                  href={getWhatsappLink("Hello Serena Property Group. Please help me find a property.")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm font-medium text-slate-700"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Quick help on WhatsApp
-                </a>
-              </div>
-            </form>
+            <HomeSearchForm listings={listings} />
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[

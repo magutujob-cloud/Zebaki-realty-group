@@ -51,6 +51,24 @@ This creates:
 - `property-media` storage bucket
 - RLS policies
 
+### Applying later schema changes safely
+
+After the first setup, prefer running only the new migration files instead of pasting the whole schema again.
+
+For the inquiry-account update in this repo, run:
+
+- `supabase/migrations/20260403_add_customer_profiles_and_inquiry_tracking.sql`
+
+Hosted Supabase dashboard flow:
+
+1. Open your project in Supabase.
+2. Go to **SQL Editor**.
+3. Open the migration file from this repo.
+4. Paste it into a new query.
+5. Run it once on the correct project.
+
+If you later install and use the Supabase CLI, keep adding new SQL files under `supabase/migrations/` so your online schema changes stay versioned.
+
 The schema also seeds the admin allowlist with:
 
 - `magutujob@gmail.com`

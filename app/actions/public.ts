@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
+import { getCustomerSession } from "@/lib/auth";
 
 const inquirySchema = z.object({
   full_name: z.string().min(2),
@@ -13,6 +13,7 @@ const inquirySchema = z.object({
   budget: z.string().optional().nullable(),
   message: z.string().min(5),
   listing_id: z.string().uuid().optional().or(z.literal("")).nullable(),
+  return_to: z.string().optional().nullable(),
 });
 
 export async function createInquiryAction(formData: FormData) {
@@ -25,11 +26,22 @@ export async function createInquiryAction(formData: FormData) {
     budget: formData.get("budget"),
     message: formData.get("message"),
     listing_id: formData.get("listing_id"),
+    return_to: formData.get("return_to"),
   });
 
-  const supabase = await createClient();
+  const { supabase, user } = await getCustomerSession();
+
+  if (user) {
+    await supabase.from("customer_profiles").update({
+      email: parsed.email,
+      full_name: parsed.full_name,
+      phone: parsed.phone || null,
+      city: parsed.city || null,
+    }).eq("id", user.id);
+  }
 
   await supabase.from("inquiries").insert({
+    customer_id: user?.id || null,
     full_name: parsed.full_name,
     email: parsed.email,
     phone: parsed.phone || null,
@@ -40,5 +52,7 @@ export async function createInquiryAction(formData: FormData) {
     listing_id: parsed.listing_id || null,
   });
 
-  redirect("/contact?success=1");
+  const returnTo = parsed.return_to || "/contact";
+  const separator = returnTo.includes("?") ? "&" : "?";
+  redirect(`${returnTo}${separator}success=1`);
 }

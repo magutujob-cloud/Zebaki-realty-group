@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient, createPublicClient } from "@/lib/supabase/server";
-import type { Agent, BlogPost, Inquiry, Listing } from "@/lib/types";
+import { requireCustomer } from "@/lib/auth";
+import type { Agent, BlogPost, Inquiry, InquiryWithListing, Listing } from "@/lib/types";
 
 function logSupabaseError(context: string, error: unknown) {
   console.error(`[supabase:${context}]`, error);
@@ -222,5 +223,26 @@ export async function getAdminPost(id: string) {
   } catch (error) {
     logSupabaseError("getAdminPost", error);
     notFound();
+  }
+}
+
+export async function getCustomerInquiries() {
+  try {
+    const { supabase, user } = await requireCustomer();
+    const { data, error } = await supabase
+      .from("inquiries")
+      .select("*, listings(id, title, slug, city, area)")
+      .eq("customer_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      logSupabaseError("getCustomerInquiries", error);
+      return [];
+    }
+
+    return (data ?? []) as InquiryWithListing[];
+  } catch (error) {
+    logSupabaseError("getCustomerInquiries", error);
+    return [];
   }
 }

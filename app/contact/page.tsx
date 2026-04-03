@@ -2,6 +2,7 @@ import { Clock3, Mail, MessageCircle, Phone } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { ContactForm } from "@/components/contact-form";
 import { BRAND } from "@/lib/constants";
+import { getCustomerSession } from "@/lib/auth";
 import { getWhatsappLink } from "@/lib/utils";
 
 export default async function ContactPage({
@@ -11,6 +12,7 @@ export default async function ContactPage({
 }) {
   const params = await searchParams;
   const success = params.success === "1";
+  const { user, profile } = await getCustomerSession();
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -51,7 +53,21 @@ export default async function ContactPage({
               Your inquiry has been submitted successfully.
             </div>
           ) : null}
-          <ContactForm />
+          {!user ? (
+            <div className="mb-6 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              Create a client account to track inquiry progress later from your dashboard.
+            </div>
+          ) : null}
+          <ContactForm
+            returnTo="/contact"
+            signedIn={Boolean(user)}
+            defaultValues={{
+              full_name: profile?.full_name,
+              email: profile?.email || user?.email || null,
+              phone: profile?.phone,
+              city: profile?.city,
+            }}
+          />
         </div>
       </div>
     </section>

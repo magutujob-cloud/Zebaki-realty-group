@@ -23,6 +23,7 @@ export function SiteFooter() {
             <Link href="/agents" className="block">Agents</Link>
             <Link href="/blog" className="block">Insights</Link>
             <Link href="/contact" className="block">Contact</Link>
+            <Link href="/account" className="block">My inquiries</Link>
           </div>
         </div>
 
