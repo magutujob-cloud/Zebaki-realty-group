@@ -28,7 +28,7 @@ export default async function HomePage() {
               Find homes, land, rentals, and property support that fit real life.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
-              Zebaki Realty Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Mombasa, Nyeri, and Eldoret.
+              Serena Property Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Mombasa, Nyeri, and Eldoret.
             </p>
 
             <form action="/properties" className="mt-8 rounded-[28px] bg-white p-4 text-slate-950 sm:p-5">
@@ -71,7 +71,7 @@ export default async function HomePage() {
                   Search properties
                 </button>
                 <a
-                  href={getWhatsappLink("Hello Zebaki Realty Group. Please help me find a property.")}
+                  href={getWhatsappLink("Hello Serena Property Group. Please help me find a property.")}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm font-medium text-slate-700"
@@ -133,7 +133,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <SectionHeading
-            eyebrow="Why Zebaki"
+            eyebrow="Why Serena"
             title="Built for practical property journeys, not just beautiful pages"
             body="The stack supports search-led discovery, real admin auth, persistent data, image storage, and clear paths for buyers, tenants, investors, and owners."
           />

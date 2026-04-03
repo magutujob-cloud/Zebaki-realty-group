@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "Zebaki Realty Group",
+  name: "Serena Property Group",
   tagline: "Sales • Rentals • Management",
   city: "Nairobi",
   phone: "+254742370125",

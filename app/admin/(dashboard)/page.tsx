@@ -10,19 +10,23 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: "Listings", value: listings.length },
-          { label: "Agents", value: agents.length },
-          { label: "Posts", value: posts.length },
-          { label: "Inquiries", value: inquiries.length },
+          { label: "Listings", value: listings.length, href: "#listings" },
+          { label: "Agents", value: agents.length, href: "#agents" },
+          { label: "Posts", value: posts.length, href: "#posts" },
+          { label: "Inquiries", value: inquiries.length, href: "#inquiries" },
         ].map((item) => (
-          <div key={item.label} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+          <Link
+            key={item.label}
+            href={item.href}
+            className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300"
+          >
             <p className="text-sm text-slate-500">{item.label}</p>
             <p className="mt-2 text-3xl font-semibold text-slate-950">{item.value}</p>
-          </div>
+          </Link>
         ))}
       </div>
 
-      <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <section id="listings" className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-28">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-slate-950">Listings</h2>
           <Link href="/admin/listings/new" className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white">Add listing</Link>
@@ -61,9 +65,14 @@ export default async function AdminDashboardPage() {
             </tbody>
           </table>
         </div>
+        {listings.length === 0 ? (
+          <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+            No listings found yet. Add one with the button above, or confirm your Supabase data and API keys are correct.
+          </div>
+        ) : null}
       </section>
 
-      <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <section id="agents" className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-28">
         <div className="mb-5 flex items-center justify-between">
           <div><h2 className="text-xl font-semibold text-slate-950">Agents & leadership</h2><p className="mt-1 text-sm text-slate-500">Use role titles like CEO or Director to make people appear in the public Leadership Team section automatically.</p></div>
           <Link href="/admin/agents/new" className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white">Add agent</Link>
@@ -83,9 +92,14 @@ export default async function AdminDashboardPage() {
             </div>
           ))}
         </div>
+        {agents.length === 0 ? (
+          <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+            No agents found yet.
+          </div>
+        ) : null}
       </section>
 
-      <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <section id="posts" className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-28">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-slate-950">Blog posts</h2>
           <Link href="/admin/blog/new" className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white">Add post</Link>
@@ -105,9 +119,14 @@ export default async function AdminDashboardPage() {
             </div>
           ))}
         </div>
+        {posts.length === 0 ? (
+          <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+            No blog posts found yet.
+          </div>
+        ) : null}
       </section>
 
-      <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <section id="inquiries" className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm scroll-mt-28">
         <h2 className="mb-5 text-xl font-semibold text-slate-950">Inquiries</h2>
         <div className="space-y-4">
           {inquiries.map((inquiry) => (
@@ -133,6 +152,11 @@ export default async function AdminDashboardPage() {
             </div>
           ))}
         </div>
+        {inquiries.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+            No contact inquiries yet. New submissions from the public contact form will appear here.
+          </div>
+        ) : null}
       </section>
     </div>
   );

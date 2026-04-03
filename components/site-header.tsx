@@ -42,7 +42,7 @@ export function SiteHeader() {
             Saved in browser
           </Link>
           <a
-            href={getWhatsappLink("Hello Zebaki Realty Group. I would like help finding a property.")}
+            href={getWhatsappLink("Hello Serena Property Group. I would like help finding a property.")}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white"
@@ -95,7 +95,7 @@ export function SiteHeader() {
               Call
             </a>
             <a
-              href={getWhatsappLink("Hello Zebaki Realty Group. I would like help finding a property.")}
+              href={getWhatsappLink("Hello Serena Property Group. I would like help finding a property.")}
               target="_blank"
               rel="noreferrer"
               className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white"

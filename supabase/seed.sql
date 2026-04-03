@@ -127,7 +127,7 @@ values
   'A practical guide to plot size, title checks, zoning, road access, and the documents buyers should review before making an offer.',
   'Buying land is often a long-term decision. Start with the title or ownership documents, confirm the location and beacons on the ground, review zoning and permitted use, and understand utilities and road access. Buyers should also review transfer costs, timelines, and any physical or legal issues affecting development potential.',
   'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
-  'Zebaki Realty Group',
+  'Serena Property Group',
   5,
   true,
   now()
@@ -139,7 +139,7 @@ values
   'Affordability still matters, but so do access roads, water reliability, flexible layouts, and proximity to daily services.',
   'Across Kenya''s growing cities, mid-market buyers increasingly want practical homes: reliable utility connections, secure compounds, flexible family-friendly layouts, and locations that reduce commuting pressure. Good value is not just price; it is also usability, upkeep, and future resale appeal.',
   'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
-  'Zebaki Realty Group',
+  'Serena Property Group',
   4,
   true,
   now()

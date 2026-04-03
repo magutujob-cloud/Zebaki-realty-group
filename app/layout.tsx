@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Zebaki Realty Group",
+  title: "Serena Property Group",
   description: "Property sales, rentals, and management across major Kenyan cities.",
 };
 

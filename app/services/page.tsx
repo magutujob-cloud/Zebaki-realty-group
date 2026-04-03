@@ -34,7 +34,7 @@ export default function ServicesPage() {
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {[
             "Add proof points such as years of experience, occupancy levels, or average response times once available.",
-            "Use management case studies to show how Zebaki handles tenants, maintenance, and owner reporting.",
+            "Use management case studies to show how Serena Property Group handles tenants, maintenance, and owner reporting.",
             "Include a dedicated valuation or management proposal form once you finalize the operating model.",
           ].map((text) => (
             <div key={text} className="rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">

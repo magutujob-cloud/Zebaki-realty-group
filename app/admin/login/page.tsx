@@ -12,7 +12,7 @@ export default async function AdminLoginPage() {
         <div className="mb-8 flex items-start justify-between gap-4">
           <SectionHeading
             eyebrow="Admin access"
-            title="Sign in to manage Zebaki Realty Group"
+            title="Sign in to manage Serena Property Group"
             body="Admin authorization is enforced through Supabase Auth and an admin email allowlist in the database."
           />
           <ShieldCheck className="mt-2 h-10 w-10 text-slate-400" />
