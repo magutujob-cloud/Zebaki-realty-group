@@ -3,6 +3,8 @@ import { AgentCard } from "@/components/agent-card";
 import { getAllAgents } from "@/lib/queries";
 import { splitPeople } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AgentsPage() {
   const allPeople = await getAllAgents();
   const { leadership, agents } = splitPeople(allPeople);

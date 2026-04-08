@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
-import { parseArray, slugify } from "@/lib/utils";
+import { getAgentPath, parseArray, slugify } from "@/lib/utils";
 
 const listingSchema = z.object({
   id: z.string().uuid().optional().nullable(),
@@ -67,6 +67,7 @@ function invalidate() {
   revalidatePath("/properties", "layout");
   revalidatePath("/agents");
   revalidatePath("/agents", "layout");
+  revalidatePath("/agents/[slug]", "page");
   revalidatePath("/blog");
   revalidatePath("/contact");
   revalidatePath("/admin");
@@ -234,8 +235,15 @@ export async function createAgentAction(formData: FormData) {
 
 export async function updateAgentAction(formData: FormData) {
   const { supabase } = await requireAdmin();
+  const id = String(formData.get("id") || "");
+  const { data: previousAgent } = await supabase
+    .from("agents")
+    .select("id, full_name")
+    .eq("id", id)
+    .maybeSingle();
+
   const parsed = agentSchema.parse({
-    id: formData.get("id"),
+    id,
     full_name: formData.get("full_name"),
     role: formData.get("role"),
     city: formData.get("city"),
@@ -265,6 +273,10 @@ export async function updateAgentAction(formData: FormData) {
   }).eq("id", parsed.id!);
 
   invalidate();
+  if (previousAgent) {
+    revalidatePath(getAgentPath(previousAgent));
+  }
+  revalidatePath(`/agents/${slugify(parsed.full_name)}-${parsed.id!.slice(0, 8)}`);
   redirect("/admin");
 }
 

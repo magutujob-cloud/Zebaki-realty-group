@@ -3,13 +3,9 @@ import Link from "next/link";
 import { Mail, MapPin, Phone, ShieldCheck, Star } from "lucide-react";
 import { PropertyCard } from "@/components/property-card";
 import { SectionHeading } from "@/components/section-heading";
-import { getAgentBySlug, getAllAgents, getPublishedListingsByAgent } from "@/lib/queries";
-import { getAgentPath } from "@/lib/utils";
+import { getAgentBySlug, getPublishedListingsByAgent } from "@/lib/queries";
 
-export async function generateStaticParams() {
-  const agents = await getAllAgents();
-  return agents.map((agent) => ({ slug: getAgentPath(agent).split("/").pop() || "" }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function AgentProfilePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
