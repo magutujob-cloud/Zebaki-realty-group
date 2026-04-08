@@ -1,6 +1,13 @@
+"use client";
+
+import { useActionState } from "react";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
 import type { Agent } from "@/lib/types";
 import { CITIES } from "@/lib/constants";
+
+type FormState = {
+  error: string | null;
+};
 
 type Props = {
   action: (formData: FormData) => void | Promise<void>;
@@ -9,8 +16,22 @@ type Props = {
 };
 
 export function AgentForm({ action, initialData, submitLabel }: Props) {
+  const [state, formAction, pending] = useActionState<FormState, FormData>(
+    async (_prevState, formData) => {
+      try {
+        await action(formData);
+        return { error: null };
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : "Unable to save agent changes.",
+        };
+      }
+    },
+    { error: null },
+  );
+
   return (
-    <form action={action} className="space-y-5 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <form action={formAction} className="space-y-5 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       {initialData?.id ? <input type="hidden" name="id" value={initialData.id} /> : null}
       <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">
         Use this form for both <strong>agents</strong> and <strong>leadership</strong>. If the role includes <strong>CEO</strong>, <strong>Director</strong>, <strong>Founder</strong>, <strong>Managing Director</strong>, or <strong>Head of</strong>, the person will automatically appear in the Leadership Team section of the site.
@@ -69,7 +90,17 @@ export function AgentForm({ action, initialData, submitLabel }: Props) {
         Active
       </label>
 
-      <button type="submit" className="cursor-pointer rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white">
+      {state.error ? (
+        <p className="rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          {state.error}
+        </p>
+      ) : null}
+
+      <button
+        type="submit"
+        disabled={pending}
+        className="cursor-pointer rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
+      >
         {submitLabel}
       </button>
     </form>

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getAgentPath, parseArray, slugify } from "@/lib/utils";
 
 const listingSchema = z.object({
@@ -82,7 +83,8 @@ function assertMutationSucceeded(context: string, error: { message?: string } | 
 }
 
 export async function createListingAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
 
   const parsed = listingSchema.parse({
     agent_id: formData.get("agent_id"),
@@ -141,7 +143,8 @@ export async function createListingAction(formData: FormData) {
 }
 
 export async function updateListingAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
 
   const parsed = listingSchema.parse({
     id: formData.get("id"),
@@ -201,7 +204,8 @@ export async function updateListingAction(formData: FormData) {
 }
 
 export async function deleteListingAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
   const { error } = await supabase.from("listings").delete().eq("id", id);
   assertMutationSucceeded("delete listing", error);
@@ -210,7 +214,8 @@ export async function deleteListingAction(formData: FormData) {
 }
 
 export async function createAgentAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const parsed = agentSchema.parse({
     full_name: formData.get("full_name"),
     role: formData.get("role"),
@@ -246,7 +251,8 @@ export async function createAgentAction(formData: FormData) {
 }
 
 export async function updateAgentAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
   const { data: previousAgent } = await supabase
     .from("agents")
@@ -295,7 +301,8 @@ export async function updateAgentAction(formData: FormData) {
 }
 
 export async function deleteAgentAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
   const { error } = await supabase.from("agents").delete().eq("id", id);
   assertMutationSucceeded("delete agent", error);
@@ -304,7 +311,8 @@ export async function deleteAgentAction(formData: FormData) {
 }
 
 export async function createBlogPostAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const parsed = postSchema.parse({
     title: formData.get("title"),
     slug: formData.get("slug"),
@@ -337,7 +345,8 @@ export async function createBlogPostAction(formData: FormData) {
 }
 
 export async function updateBlogPostAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const parsed = postSchema.parse({
     id: formData.get("id"),
     title: formData.get("title"),
@@ -370,7 +379,8 @@ export async function updateBlogPostAction(formData: FormData) {
 }
 
 export async function deleteBlogPostAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
   const { error } = await supabase.from("blog_posts").delete().eq("id", id);
   assertMutationSucceeded("delete blog post", error);
@@ -379,7 +389,8 @@ export async function deleteBlogPostAction(formData: FormData) {
 }
 
 export async function updateInquiryStatusAction(formData: FormData) {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
+  const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
   const status = String(formData.get("status") || "new");
   const { error } = await supabase.from("inquiries").update({ status }).eq("id", id);
