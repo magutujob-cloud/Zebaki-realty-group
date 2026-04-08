@@ -58,6 +58,10 @@ const postSchema = z.object({
   published: z.boolean().optional(),
 });
 
+export type AdminFormState = {
+  error: string | null;
+};
+
 function truthy(formData: FormData, key: string) {
   return formData.get(key) === "on";
 }
@@ -80,6 +84,18 @@ function assertMutationSucceeded(context: string, error: { message?: string } | 
     console.error(`[admin-action:${context}]`, error);
     throw new Error(error.message || `Failed to ${context}.`);
   }
+}
+
+function formatActionError(error: unknown) {
+  if (error instanceof z.ZodError) {
+    return error.issues[0]?.message || "Please review the form and try again.";
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Something went wrong while saving.";
 }
 
 export async function createListingAction(formData: FormData) {
@@ -250,6 +266,18 @@ export async function createAgentAction(formData: FormData) {
   redirect("/admin");
 }
 
+export async function createAgentFormAction(
+  _previousState: AdminFormState,
+  formData: FormData,
+): Promise<AdminFormState> {
+  try {
+    await createAgentAction(formData);
+    return { error: null };
+  } catch (error) {
+    return { error: formatActionError(error) };
+  }
+}
+
 export async function updateAgentAction(formData: FormData) {
   await requireAdmin();
   const supabase = createAdminClient();
@@ -298,6 +326,18 @@ export async function updateAgentAction(formData: FormData) {
   revalidatePath(`/agents/${slugify(parsed.full_name)}-${parsed.id!.slice(0, 8)}`);
   revalidatePath(`/admin/agents/${parsed.id}/edit`);
   redirect("/admin");
+}
+
+export async function updateAgentFormAction(
+  _previousState: AdminFormState,
+  formData: FormData,
+): Promise<AdminFormState> {
+  try {
+    await updateAgentAction(formData);
+    return { error: null };
+  } catch (error) {
+    return { error: formatActionError(error) };
+  }
 }
 
 export async function deleteAgentAction(formData: FormData) {

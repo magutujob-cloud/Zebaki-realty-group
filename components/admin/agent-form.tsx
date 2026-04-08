@@ -2,33 +2,18 @@
 
 import { useActionState } from "react";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
-import type { Agent } from "@/lib/types";
 import { CITIES } from "@/lib/constants";
-
-type FormState = {
-  error: string | null;
-};
+import type { AdminFormState } from "@/app/admin/actions";
+import type { Agent } from "@/lib/types";
 
 type Props = {
-  action: (formData: FormData) => void | Promise<void>;
+  action: (state: AdminFormState, formData: FormData) => Promise<AdminFormState>;
   initialData?: Partial<Agent>;
   submitLabel: string;
 };
 
 export function AgentForm({ action, initialData, submitLabel }: Props) {
-  const [state, formAction, pending] = useActionState<FormState, FormData>(
-    async (_prevState, formData) => {
-      try {
-        await action(formData);
-        return { error: null };
-      } catch (error) {
-        return {
-          error: error instanceof Error ? error.message : "Unable to save agent changes.",
-        };
-      }
-    },
-    { error: null },
-  );
+  const [state, formAction, pending] = useActionState(action, { error: null });
 
   return (
     <form action={formAction} className="space-y-5 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
