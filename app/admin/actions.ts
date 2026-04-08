@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -87,12 +88,22 @@ function assertMutationSucceeded(context: string, error: { message?: string } | 
 }
 
 function formatActionError(error: unknown) {
+  const message = error instanceof Error ? error.message : "";
+
+  if (message.includes("Could not find the 'sales_count' column of 'agents'")) {
+    return "Your Supabase database is missing the newer agent profile columns. Run the 20260408 agent metrics migration, then try saving again.";
+  }
+
+  if (message.includes("Could not find the 'years_experience' column of 'agents'")) {
+    return "Your Supabase database is missing the newer agent profile columns. Run the 20260408 agent metrics migration, then try saving again.";
+  }
+
   if (error instanceof z.ZodError) {
     return error.issues[0]?.message || "Please review the form and try again.";
   }
 
-  if (error instanceof Error) {
-    return error.message;
+  if (message) {
+    return message;
   }
 
   return "Something went wrong while saving.";
@@ -274,6 +285,9 @@ export async function createAgentFormAction(
     await createAgentAction(formData);
     return { error: null };
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return { error: formatActionError(error) };
   }
 }
@@ -336,6 +350,9 @@ export async function updateAgentFormAction(
     await updateAgentAction(formData);
     return { error: null };
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return { error: formatActionError(error) };
   }
 }
