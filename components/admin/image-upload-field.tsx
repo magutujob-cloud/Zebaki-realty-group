@@ -33,7 +33,11 @@ export function ImageUploadField({ name, label, defaultValue = "", folder = "gen
     });
 
     if (error) {
-      setError(error.message);
+      if (error.message.includes("54001")) {
+        setError("Image upload is blocked by the current Supabase storage policy. Apply the latest storage-policy migration, then try again.");
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
       return;
     }
