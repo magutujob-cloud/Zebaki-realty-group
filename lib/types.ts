@@ -1,5 +1,6 @@
 export type Listing = {
   id: string;
+  agent_id: string | null;
   slug: string;
   title: string;
   property_type: string;
@@ -35,8 +36,29 @@ export type Agent = {
   image_url: string | null;
   specialties: string[] | null;
   bio: string | null;
+  years_experience: number | null;
+  sales_count: number | null;
   sort_order: number | null;
   active: boolean;
+  created_at: string;
+  agent_users?: AgentUser[] | null;
+};
+
+export type AgentUser = {
+  id: string;
+  agent_id: string;
+  email: string;
+  can_manage_listings: boolean;
+  can_manage_transactions: boolean;
+  can_delete_transactions: boolean;
+  active: boolean;
+  created_at: string;
+};
+
+export type StaffSession = {
+  role: "admin" | "agent";
+  email: string;
+  agentUser: AgentUser | null;
 };
 
 export type BlogPost = {
@@ -85,5 +107,31 @@ export type InquiryWithListing = Inquiry & {
     slug: string;
     city: string;
     area: string;
+  } | null;
+};
+
+export type PropertyTransaction = {
+  id: string;
+  agent_id: string;
+  listing_id: string | null;
+  category: string;
+  transaction_type: string;
+  client_name: string;
+  amount: number | null;
+  status: string;
+  notes: string | null;
+  transaction_date: string;
+  created_by: string | null;
+  created_at: string;
+  listings?: {
+    id: string;
+    title: string;
+    city: string;
+    area: string;
+  } | null;
+  agents?: {
+    id: string;
+    full_name: string;
+    role: string;
   } | null;
 };

@@ -1,14 +1,15 @@
 import { ImageUploadField } from "@/components/admin/image-upload-field";
-import type { Listing } from "@/lib/types";
+import type { Agent, Listing } from "@/lib/types";
 import { CITIES, PROPERTY_TYPES, PURPOSES } from "@/lib/constants";
 
 type Props = {
   action: (formData: FormData) => void | Promise<void>;
+  agents?: Agent[];
   initialData?: Partial<Listing>;
   submitLabel: string;
 };
 
-export function ListingForm({ action, initialData, submitLabel }: Props) {
+export function ListingForm({ action, agents = [], initialData, submitLabel }: Props) {
   return (
     <form action={action} className="space-y-5 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       {initialData?.id ? <input type="hidden" name="id" value={initialData.id} /> : null}
@@ -48,6 +49,18 @@ export function ListingForm({ action, initialData, submitLabel }: Props) {
         <label className="block text-sm text-slate-700">
           <span className="mb-2 block font-medium">Area / neighborhood</span>
           <input name="area" defaultValue={initialData?.area || ""} required className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
+        </label>
+
+        <label className="block text-sm text-slate-700">
+          <span className="mb-2 block font-medium">Assigned agent</span>
+          <select name="agent_id" defaultValue={initialData?.agent_id || ""} className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400">
+            <option value="">No assigned agent</option>
+            {agents.map((agent) => (
+              <option key={agent.id} value={agent.id}>
+                {agent.full_name} - {agent.role}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label className="block text-sm text-slate-700">

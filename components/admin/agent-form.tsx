@@ -39,6 +39,14 @@ export function AgentForm({ action, initialData, submitLabel }: Props) {
           <input name="email" type="email" defaultValue={initialData?.email || ""} className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
         </label>
         <label className="block text-sm text-slate-700">
+          <span className="mb-2 block font-medium">Years of experience</span>
+          <input name="years_experience" type="number" min="0" defaultValue={initialData?.years_experience || ""} className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
+        </label>
+        <label className="block text-sm text-slate-700">
+          <span className="mb-2 block font-medium">Sales recorded</span>
+          <input name="sales_count" type="number" min="0" defaultValue={initialData?.sales_count || ""} className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
+        </label>
+        <label className="block text-sm text-slate-700">
           <span className="mb-2 block font-medium">Sort order</span>
           <input name="sort_order" type="number" defaultValue={initialData?.sort_order || ""} className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-slate-400" />
         </label>

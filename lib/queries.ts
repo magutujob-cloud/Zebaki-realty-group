@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { requireCustomer } from "@/lib/auth";
 import type { Agent, BlogPost, Inquiry, InquiryWithListing, Listing } from "@/lib/types";
+import { getAgentSlug } from "@/lib/utils";
 
 function logSupabaseError(context: string, error: unknown) {
   console.error(`[supabase:${context}]`, error);
@@ -52,6 +53,29 @@ export async function getPublishedListings() {
   }
 }
 
+export async function getPublishedListingsByAgent(agentId: string) {
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("published", true)
+      .eq("agent_id", agentId)
+      .order("featured", { ascending: false })
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      logSupabaseError("getPublishedListingsByAgent", error);
+      return [];
+    }
+
+    return (data ?? []) as Listing[];
+  } catch (error) {
+    logSupabaseError("getPublishedListingsByAgent", error);
+    return [];
+  }
+}
+
 export async function getListingBySlug(slug: string) {
   try {
     const supabase = createPublicClient();
@@ -95,6 +119,14 @@ export async function getAllAgents() {
     logSupabaseError("getAllAgents", error);
     return [];
   }
+}
+
+export async function getAgentBySlug(slug: string) {
+  const agents = await getAllAgents();
+  const agent = agents.find((item) => getAgentSlug(item) === slug);
+
+  if (!agent) notFound();
+  return agent;
 }
 
 export async function getPublishedPosts() {
@@ -207,6 +239,25 @@ export async function getAdminAgent(id: string) {
   } catch (error) {
     logSupabaseError("getAdminAgent", error);
     notFound();
+  }
+}
+
+export async function getAdminAgents() {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("agents")
+      .select("*")
+      .order("sort_order", { ascending: true, nullsFirst: false })
+      .order("created_at", { ascending: true });
+    if (error) {
+      logSupabaseError("getAdminAgents", error);
+      return [];
+    }
+    return (data ?? []) as Agent[];
+  } catch (error) {
+    logSupabaseError("getAdminAgents", error);
+    return [];
   }
 }
 

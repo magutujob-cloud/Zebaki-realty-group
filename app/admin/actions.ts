@@ -8,6 +8,7 @@ import { parseArray, slugify } from "@/lib/utils";
 
 const listingSchema = z.object({
   id: z.string().uuid().optional().nullable(),
+  agent_id: z.string().uuid().optional().nullable().or(z.literal("")),
   title: z.string().min(3),
   slug: z.string().optional().nullable(),
   property_type: z.string().min(1),
@@ -38,6 +39,8 @@ const agentSchema = z.object({
   email: z.string().email().optional().or(z.literal("")),
   image_url: z.string().optional().nullable(),
   bio: z.string().min(5),
+  years_experience: z.coerce.number().nullable().optional(),
+  sales_count: z.coerce.number().nullable().optional(),
   sort_order: z.coerce.number().nullable().optional(),
   active: z.boolean().optional(),
 });
@@ -61,7 +64,9 @@ function truthy(formData: FormData, key: string) {
 function invalidate() {
   revalidatePath("/");
   revalidatePath("/properties");
+  revalidatePath("/properties", "layout");
   revalidatePath("/agents");
+  revalidatePath("/agents", "layout");
   revalidatePath("/blog");
   revalidatePath("/contact");
   revalidatePath("/admin");
@@ -71,6 +76,7 @@ export async function createListingAction(formData: FormData) {
   const { supabase } = await requireAdmin();
 
   const parsed = listingSchema.parse({
+    agent_id: formData.get("agent_id"),
     title: formData.get("title"),
     slug: formData.get("slug"),
     property_type: formData.get("property_type"),
@@ -95,6 +101,7 @@ export async function createListingAction(formData: FormData) {
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
   await supabase.from("listings").insert({
+    agent_id: parsed.agent_id || null,
     title: parsed.title,
     slug,
     property_type: parsed.property_type,
@@ -128,6 +135,7 @@ export async function updateListingAction(formData: FormData) {
 
   const parsed = listingSchema.parse({
     id: formData.get("id"),
+    agent_id: formData.get("agent_id"),
     title: formData.get("title"),
     slug: formData.get("slug"),
     property_type: formData.get("property_type"),
@@ -152,6 +160,7 @@ export async function updateListingAction(formData: FormData) {
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
   await supabase.from("listings").update({
+    agent_id: parsed.agent_id || null,
     title: parsed.title,
     slug,
     property_type: parsed.property_type,
@@ -198,6 +207,8 @@ export async function createAgentAction(formData: FormData) {
     email: formData.get("email"),
     image_url: formData.get("image_url"),
     bio: formData.get("bio"),
+    years_experience: formData.get("years_experience") || null,
+    sales_count: formData.get("sales_count") || null,
     sort_order: formData.get("sort_order") || null,
     active: truthy(formData, "active"),
   });
@@ -211,6 +222,8 @@ export async function createAgentAction(formData: FormData) {
     image_url: parsed.image_url || null,
     specialties: parseArray(formData.get("specialties")),
     bio: parsed.bio,
+    years_experience: parsed.years_experience || null,
+    sales_count: parsed.sales_count || null,
     sort_order: parsed.sort_order || null,
     active: parsed.active ?? true,
   });
@@ -230,6 +243,8 @@ export async function updateAgentAction(formData: FormData) {
     email: formData.get("email"),
     image_url: formData.get("image_url"),
     bio: formData.get("bio"),
+    years_experience: formData.get("years_experience") || null,
+    sales_count: formData.get("sales_count") || null,
     sort_order: formData.get("sort_order") || null,
     active: truthy(formData, "active"),
   });
@@ -243,6 +258,8 @@ export async function updateAgentAction(formData: FormData) {
     image_url: parsed.image_url || null,
     specialties: parseArray(formData.get("specialties")),
     bio: parsed.bio,
+    years_experience: parsed.years_experience || null,
+    sales_count: parsed.sales_count || null,
     sort_order: parsed.sort_order || null,
     active: parsed.active ?? true,
   }).eq("id", parsed.id!);

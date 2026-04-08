@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { BarChart3, Building2, Handshake, HousePlus, Map, Search, ShieldCheck } from "lucide-react";
 import { getAllAgents, getFeaturedListings, getPublishedListings } from "@/lib/queries";
+import { AgentCard } from "@/components/agent-card";
 import { SectionHeading } from "@/components/section-heading";
 import { PropertyCard } from "@/components/property-card";
 import { CITIES } from "@/lib/constants";
@@ -115,22 +115,7 @@ export default async function HomePage() {
           />
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {leadership.length > 0 ? leadership.slice(0, 3).map((person) => (
-              <div key={person.id} className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
-                <Image
-                  src={person.image_url || "https://placehold.co/800x800?text=Leadership+Photo"}
-                  alt={person.full_name}
-                  width={800}
-                  height={800}
-                  className="h-72 w-full object-cover"
-                />
-                <div className="space-y-3 p-6">
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-950">{person.full_name}</h3>
-                    <p className="mt-1 text-sm text-slate-500">{person.role}</p>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-600">{person.bio}</p>
-                </div>
-              </div>
+              <AgentCard key={person.id} agent={person} imageFallbackText="Leadership+Photo" showBio={false} />
             )) : (
               <div className="rounded-[28px] border border-dashed border-slate-300 bg-white p-8 text-sm leading-7 text-slate-600 md:col-span-2 xl:col-span-3">
                 Add your CEO and directors from <strong>Admin → New agent</strong>. Use role titles like <strong>CEO</strong>, <strong>Director</strong>, or <strong>Managing Director</strong> and they will appear here automatically.

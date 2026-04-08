@@ -1,10 +1,10 @@
 import { updateListingAction } from "@/app/admin/actions";
 import { ListingForm } from "@/components/admin/listing-form";
-import { getAdminListing } from "@/lib/queries";
+import { getAdminAgents, getAdminListing } from "@/lib/queries";
 
 export default async function EditListingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const listing = await getAdminListing(id);
+  const [listing, agents] = await Promise.all([getAdminListing(id), getAdminAgents()]);
 
-  return <ListingForm action={updateListingAction} initialData={listing} submitLabel="Save changes" />;
+  return <ListingForm action={updateListingAction} agents={agents} initialData={listing} submitLabel="Save changes" />;
 }

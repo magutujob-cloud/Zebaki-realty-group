@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Bath, BedDouble, Heart, MapPin, Ruler } from "lucide-react";
+import { Bath, BedDouble, ChevronLeft, ChevronRight, Heart, MapPin, Ruler } from "lucide-react";
 import { formatKES } from "@/lib/utils";
 import type { Listing } from "@/lib/types";
-import { useEffect, useState } from "react";
+import type { TouchEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const STORAGE_KEY = "zebaki_saved_listing_ids";
 
@@ -30,13 +31,48 @@ function useSavedListings() {
 
 export function PropertyCard({ listing }: { listing: Listing }) {
   const { saved, toggle } = useSavedListings();
-  const cover = listing.cover_image_url || "https://placehold.co/1200x800?text=Property+Photo";
+  const images = useMemo(() => {
+    const fallback = "https://placehold.co/1200x800?text=Property+Photo";
+    const candidates = [listing.cover_image_url, ...(listing.gallery_urls || [])].filter(Boolean) as string[];
+    const unique = [...new Set(candidates)];
+
+    return unique.length > 0 ? unique : [fallback];
+  }, [listing.cover_image_url, listing.gallery_urls]);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
   const isSaved = saved.includes(listing.id);
+  const activeImage = images[activeImageIndex] || images[0];
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [listing.id]);
+
+  function goToImage(index: number) {
+    const nextIndex = (index + images.length) % images.length;
+    setActiveImageIndex(nextIndex);
+  }
+
+  function handleTouchStart(event: TouchEvent<HTMLDivElement>) {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  }
+
+  function handleTouchEnd(event: TouchEvent<HTMLDivElement>) {
+    if (touchStartX.current === null || images.length < 2) return;
+
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+    const deltaX = touchEndX - touchStartX.current;
+
+    if (Math.abs(deltaX) > 40) {
+      goToImage(activeImageIndex + (deltaX < 0 ? 1 : -1));
+    }
+
+    touchStartX.current = null;
+  }
 
   return (
     <article className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1">
-      <div className="relative">
-        <Image src={cover} alt={listing.title} width={1200} height={800} className="h-64 w-full object-cover" />
+      <div className="relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <Image src={activeImage} alt={listing.title} width={1200} height={800} className="h-64 w-full object-cover" />
         <button
           type="button"
           onClick={() => toggle(listing.id)}
@@ -53,8 +89,56 @@ export function PropertyCard({ listing }: { listing: Listing }) {
             {listing.property_type}
           </span>
         </div>
+        {images.length > 1 ? (
+          <>
+            <button
+              type="button"
+              onClick={() => goToImage(activeImageIndex - 1)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-slate-900 shadow-sm transition hover:bg-white"
+              aria-label="Previous preview image"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => goToImage(activeImageIndex + 1)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-slate-900 shadow-sm transition hover:bg-white"
+              aria-label="Next preview image"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-slate-950/70 px-3 py-2">
+              {images.map((image, index) => (
+                <button
+                  key={`${image}-${index}`}
+                  type="button"
+                  onClick={() => goToImage(index)}
+                  className={`h-2 w-2 rounded-full transition ${index === activeImageIndex ? "bg-white" : "bg-white/40"}`}
+                  aria-label={`Preview image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
       </div>
       <div className="space-y-4 p-5">
+        {images.length > 1 ? (
+          <div className="-mt-1 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {images.map((image, index) => (
+              <button
+                key={`${image}-thumb-${index}`}
+                type="button"
+                onClick={() => goToImage(index)}
+                className={`relative h-16 w-20 shrink-0 overflow-hidden rounded-2xl border transition ${
+                  index === activeImageIndex ? "border-slate-950" : "border-slate-200 hover:border-slate-300"
+                }`}
+                aria-label={`Open thumbnail ${index + 1}`}
+              >
+                <Image src={image} alt={`${listing.title} thumbnail ${index + 1}`} fill sizes="80px" className="object-cover" />
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className="space-y-2">
           <p className="text-xl font-semibold text-slate-950">{formatKES(listing.price, listing.purpose)}</p>
           <h3 className="text-lg font-semibold text-slate-950">{listing.title}</h3>

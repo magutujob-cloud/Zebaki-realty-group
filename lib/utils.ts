@@ -77,3 +77,11 @@ export function splitPeople(agents: Agent[]) {
   const agentsOnly = agents.filter((agent) => !isLeadershipRole(agent.role));
   return { leadership, agents: agentsOnly };
 }
+
+export function getAgentSlug(agent: Pick<Agent, "id" | "full_name">) {
+  return `${slugify(agent.full_name)}-${agent.id.slice(0, 8)}`;
+}
+
+export function getAgentPath(agent: Pick<Agent, "id" | "full_name">) {
+  return `/agents/${getAgentSlug(agent)}`;
+}

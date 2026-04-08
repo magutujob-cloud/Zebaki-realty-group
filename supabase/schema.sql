@@ -33,6 +33,7 @@ create table if not exists public.customer_profiles (
 
 create table if not exists public.listings (
   id uuid primary key default gen_random_uuid(),
+  agent_id uuid,
   slug text not null unique,
   title text not null,
   property_type text not null,
@@ -69,11 +70,22 @@ create table if not exists public.agents (
   image_url text,
   specialties text[] not null default '{}',
   bio text,
+  years_experience integer,
+  sales_count integer,
   sort_order integer default 0,
   active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.listings
+  drop constraint if exists listings_agent_id_fkey;
+
+alter table public.listings
+  add constraint listings_agent_id_fkey
+  foreign key (agent_id) references public.agents(id) on delete set null;
+
+create index if not exists listings_agent_id_idx on public.listings(agent_id);
 
 create table if not exists public.blog_posts (
   id uuid primary key default gen_random_uuid(),

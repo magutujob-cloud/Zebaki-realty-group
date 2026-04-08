@@ -90,7 +90,7 @@ values
 )
 on conflict (slug) do nothing;
 
-insert into public.agents (full_name, role, city, phone, email, image_url, specialties, bio, sort_order, active)
+insert into public.agents (full_name, role, city, phone, email, image_url, specialties, bio, years_experience, sales_count, sort_order, active)
 values
 (
   'Amina Kibet',
@@ -101,6 +101,8 @@ values
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80',
   array['Family homes', 'Buyer advisory', 'Negotiation'],
   'Amina leads the sales desk and supports homebuyers, investors, and developers with practical, insight-led property decisions.',
+  9,
+  54,
   1,
   true
 ),
@@ -113,10 +115,20 @@ values
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
   array['Land sales', 'Due diligence', 'Investment scouting'],
   'Brian helps clients evaluate land opportunities with a focus on zoning, title status, growth corridors, and practical exit potential.',
+  7,
+  31,
   2,
   true
 )
 on conflict do nothing;
+
+update public.listings
+set agent_id = (select id from public.agents where full_name = 'Amina Kibet' limit 1)
+where slug in ('modern-4-bedroom-family-home', 'serviced-2-bedroom-apartment');
+
+update public.listings
+set agent_id = (select id from public.agents where full_name = 'Brian Otieno' limit 1)
+where slug in ('prime-quarter-acre-residential-plot');
 
 insert into public.blog_posts (slug, title, category, excerpt, content, cover_image_url, author_name, read_time_minutes, published, published_at)
 values
