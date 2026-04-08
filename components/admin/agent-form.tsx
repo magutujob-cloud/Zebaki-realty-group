@@ -69,7 +69,7 @@ export function AgentForm({ action, initialData, submitLabel }: Props) {
         Active
       </label>
 
-      <button type="submit" className="rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white">
+      <button type="submit" className="cursor-pointer rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white">
         {submitLabel}
       </button>
     </form>

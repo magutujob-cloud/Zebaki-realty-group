@@ -71,6 +71,14 @@ function invalidate() {
   revalidatePath("/blog");
   revalidatePath("/contact");
   revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
+}
+
+function assertMutationSucceeded(context: string, error: { message?: string } | null) {
+  if (error) {
+    console.error(`[admin-action:${context}]`, error);
+    throw new Error(error.message || `Failed to ${context}.`);
+  }
 }
 
 export async function createListingAction(formData: FormData) {
@@ -101,7 +109,7 @@ export async function createListingAction(formData: FormData) {
 
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
-  await supabase.from("listings").insert({
+  const { error } = await supabase.from("listings").insert({
     agent_id: parsed.agent_id || null,
     title: parsed.title,
     slug,
@@ -126,6 +134,7 @@ export async function createListingAction(formData: FormData) {
     featured: parsed.featured || false,
     published: parsed.published ?? true,
   });
+  assertMutationSucceeded("create listing", error);
 
   invalidate();
   redirect("/admin");
@@ -160,7 +169,7 @@ export async function updateListingAction(formData: FormData) {
 
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
-  await supabase.from("listings").update({
+  const { error } = await supabase.from("listings").update({
     agent_id: parsed.agent_id || null,
     title: parsed.title,
     slug,
@@ -185,6 +194,7 @@ export async function updateListingAction(formData: FormData) {
     featured: parsed.featured || false,
     published: parsed.published ?? true,
   }).eq("id", parsed.id!);
+  assertMutationSucceeded("update listing", error);
 
   invalidate();
   redirect("/admin");
@@ -193,7 +203,8 @@ export async function updateListingAction(formData: FormData) {
 export async function deleteListingAction(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = String(formData.get("id") || "");
-  await supabase.from("listings").delete().eq("id", id);
+  const { error } = await supabase.from("listings").delete().eq("id", id);
+  assertMutationSucceeded("delete listing", error);
   invalidate();
   redirect("/admin");
 }
@@ -214,7 +225,7 @@ export async function createAgentAction(formData: FormData) {
     active: truthy(formData, "active"),
   });
 
-  await supabase.from("agents").insert({
+  const { error } = await supabase.from("agents").insert({
     full_name: parsed.full_name,
     role: parsed.role,
     city: parsed.city || null,
@@ -228,6 +239,7 @@ export async function createAgentAction(formData: FormData) {
     sort_order: parsed.sort_order || null,
     active: parsed.active ?? true,
   });
+  assertMutationSucceeded("create agent", error);
 
   invalidate();
   redirect("/admin");
@@ -257,7 +269,7 @@ export async function updateAgentAction(formData: FormData) {
     active: truthy(formData, "active"),
   });
 
-  await supabase.from("agents").update({
+  const { error } = await supabase.from("agents").update({
     full_name: parsed.full_name,
     role: parsed.role,
     city: parsed.city || null,
@@ -271,19 +283,22 @@ export async function updateAgentAction(formData: FormData) {
     sort_order: parsed.sort_order || null,
     active: parsed.active ?? true,
   }).eq("id", parsed.id!);
+  assertMutationSucceeded("update agent", error);
 
   invalidate();
   if (previousAgent) {
     revalidatePath(getAgentPath(previousAgent));
   }
   revalidatePath(`/agents/${slugify(parsed.full_name)}-${parsed.id!.slice(0, 8)}`);
+  revalidatePath(`/admin/agents/${parsed.id}/edit`);
   redirect("/admin");
 }
 
 export async function deleteAgentAction(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = String(formData.get("id") || "");
-  await supabase.from("agents").delete().eq("id", id);
+  const { error } = await supabase.from("agents").delete().eq("id", id);
+  assertMutationSucceeded("delete agent", error);
   invalidate();
   redirect("/admin");
 }
@@ -303,7 +318,7 @@ export async function createBlogPostAction(formData: FormData) {
 
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
-  await supabase.from("blog_posts").insert({
+  const { error } = await supabase.from("blog_posts").insert({
     title: parsed.title,
     slug,
     category: parsed.category || null,
@@ -315,6 +330,7 @@ export async function createBlogPostAction(formData: FormData) {
     published: parsed.published ?? true,
     published_at: parsed.published ? new Date().toISOString() : null,
   });
+  assertMutationSucceeded("create blog post", error);
 
   invalidate();
   redirect("/admin");
@@ -336,7 +352,7 @@ export async function updateBlogPostAction(formData: FormData) {
 
   const slug = parsed.slug ? slugify(parsed.slug) : slugify(parsed.title);
 
-  await supabase.from("blog_posts").update({
+  const { error } = await supabase.from("blog_posts").update({
     title: parsed.title,
     slug,
     category: parsed.category || null,
@@ -347,6 +363,7 @@ export async function updateBlogPostAction(formData: FormData) {
     published: parsed.published ?? true,
     published_at: parsed.published ? new Date().toISOString() : null,
   }).eq("id", parsed.id!);
+  assertMutationSucceeded("update blog post", error);
 
   invalidate();
   redirect("/admin");
@@ -355,7 +372,8 @@ export async function updateBlogPostAction(formData: FormData) {
 export async function deleteBlogPostAction(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = String(formData.get("id") || "");
-  await supabase.from("blog_posts").delete().eq("id", id);
+  const { error } = await supabase.from("blog_posts").delete().eq("id", id);
+  assertMutationSucceeded("delete blog post", error);
   invalidate();
   redirect("/admin");
 }
@@ -364,7 +382,8 @@ export async function updateInquiryStatusAction(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = String(formData.get("id") || "");
   const status = String(formData.get("status") || "new");
-  await supabase.from("inquiries").update({ status }).eq("id", id);
+  const { error } = await supabase.from("inquiries").update({ status }).eq("id", id);
+  assertMutationSucceeded("update inquiry status", error);
   invalidate();
   redirect("/admin");
 }

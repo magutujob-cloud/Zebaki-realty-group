@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { requireCustomer } from "@/lib/auth";
 import type { Agent, BlogPost, Inquiry, InquiryWithListing, Listing } from "@/lib/types";
@@ -175,6 +176,7 @@ export async function getPostBySlug(slug: string) {
 
 export async function getAdminDashboardData() {
   try {
+    noStore();
     const supabase = await createClient();
     const [
       { data: listings, error: listingsError },
@@ -212,6 +214,7 @@ export async function getAdminDashboardData() {
 
 export async function getAdminListing(id: string) {
   try {
+    noStore();
     const supabase = await createClient();
     const { data, error } = await supabase.from("listings").select("*").eq("id", id).maybeSingle();
     if (error) {
@@ -228,6 +231,7 @@ export async function getAdminListing(id: string) {
 
 export async function getAdminAgent(id: string) {
   try {
+    noStore();
     const supabase = await createClient();
     const { data, error } = await supabase.from("agents").select("*").eq("id", id).maybeSingle();
     if (error) {
@@ -244,6 +248,7 @@ export async function getAdminAgent(id: string) {
 
 export async function getAdminAgents() {
   try {
+    noStore();
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("agents")
@@ -263,6 +268,7 @@ export async function getAdminAgents() {
 
 export async function getAdminPost(id: string) {
   try {
+    noStore();
     const supabase = await createClient();
     const { data, error } = await supabase.from("blog_posts").select("*").eq("id", id).maybeSingle();
     if (error) {
