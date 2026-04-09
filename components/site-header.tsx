@@ -26,13 +26,13 @@ export function SiteHeader({ isSignedIn = false }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-violet-200/30 bg-black/92 text-white backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <LogoMark />
 
         <nav className="hidden items-center gap-6 lg:flex">
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="text-sm font-medium text-slate-600 transition hover:text-slate-950">
+            <Link key={item.href} href={item.href} className="text-sm font-medium text-white/72 transition hover:text-violet-300">
               {item.label}
             </Link>
           ))}
@@ -42,21 +42,21 @@ export function SiteHeader({ isSignedIn = false }: Props) {
           {isSignedIn ? (
             <Link
               href="/account"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-white/5 px-4 py-2 text-sm font-medium text-white/88"
             >
               My inquiries
             </Link>
           ) : (
             <Link
               href="/account/login"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-white/5 px-4 py-2 text-sm font-medium text-white/88"
             >
               Create account
             </Link>
           )}
           <Link
             href="/properties"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+            className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-white/5 px-4 py-2 text-sm font-medium text-white/88"
           >
             <Heart className="h-4 w-4" />
             Saved in browser
@@ -65,7 +65,7 @@ export function SiteHeader({ isSignedIn = false }: Props) {
             href={getWhatsappLink("Hello Serena Property Group. I would like help finding a property.")}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-violet-700 px-5 py-3 text-sm font-medium text-white shadow-[0_0_24px_rgba(109,40,217,0.35)]"
           >
             <MessageCircle className="h-4 w-4" />
             WhatsApp
@@ -73,39 +73,39 @@ export function SiteHeader({ isSignedIn = false }: Props) {
           {isSignedIn ? (
             <SignOutButton
               redirectTo="/"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-white/5 px-4 py-2 text-sm font-medium text-white/88"
             />
           ) : null}
         </div>
 
         <button
           onClick={() => setOpen(true)}
-          className="rounded-full border border-slate-200 p-3 lg:hidden"
+          className="rounded-full border border-violet-400/30 bg-white/5 p-3 lg:hidden"
           aria-label="Open menu"
         >
           <Menu className="h-5 w-5" />
         </button>
       </div>
 
-      <div className={cn("fixed inset-0 z-[60] bg-slate-950/45 transition lg:hidden", open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0")}>
-        <div className={cn("ml-auto flex h-full w-[88%] max-w-sm flex-col bg-white p-6 shadow-2xl transition", open ? "translate-x-0" : "translate-x-full")}>
+      <div className={cn("fixed inset-0 z-[60] bg-black/70 transition lg:hidden", open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0")}>
+        <div className={cn("ml-auto flex h-full w-[88%] max-w-sm flex-col bg-[#090611] p-6 text-white shadow-2xl transition", open ? "translate-x-0" : "translate-x-full")}>
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <p className="font-semibold text-slate-950">{BRAND.name}</p>
-              <p className="text-sm text-slate-500">{BRAND.tagline}</p>
+              <p className="font-semibold text-white">{BRAND.name}</p>
+              <p className="text-sm text-violet-200/80">{BRAND.tagline}</p>
             </div>
-            <button onClick={() => setOpen(false)} className="rounded-full border border-slate-200 p-3" aria-label="Close menu">
+            <button onClick={() => setOpen(false)} className="rounded-full border border-violet-400/30 p-3" aria-label="Close menu">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div className="space-y-3">
             {isSignedIn ? (
-              <Link href="/account" onClick={() => setOpen(false)} className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium text-slate-900">
+              <Link href="/account" onClick={() => setOpen(false)} className="block rounded-2xl border border-violet-400/30 bg-white/5 px-4 py-3 font-medium text-white">
                 My inquiries
               </Link>
             ) : (
-              <Link href="/account/login" onClick={() => setOpen(false)} className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium text-slate-900">
+              <Link href="/account/login" onClick={() => setOpen(false)} className="block rounded-2xl border border-violet-400/30 bg-white/5 px-4 py-3 font-medium text-white">
                 Create account
               </Link>
             )}
@@ -114,7 +114,7 @@ export function SiteHeader({ isSignedIn = false }: Props) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium text-slate-900"
+                className="block rounded-2xl border border-violet-400/30 bg-white/5 px-4 py-3 font-medium text-white"
               >
                 {item.label}
               </Link>
@@ -125,12 +125,12 @@ export function SiteHeader({ isSignedIn = false }: Props) {
             {isSignedIn ? (
               <SignOutButton
                 redirectTo="/"
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-violet-400/30 px-5 py-3 text-sm font-medium text-white/88"
               />
             ) : null}
             <a
               href={`tel:${BRAND.phone}`}
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-violet-400/30 px-5 py-3 text-sm font-medium text-white/88"
             >
               <Phone className="h-4 w-4" />
               Call
@@ -139,7 +139,7 @@ export function SiteHeader({ isSignedIn = false }: Props) {
               href={getWhatsappLink("Hello Serena Property Group. I would like help finding a property.")}
               target="_blank"
               rel="noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-violet-700 px-5 py-3 text-sm font-medium text-white"
             >
               <MessageCircle className="h-4 w-4" />
               WhatsApp

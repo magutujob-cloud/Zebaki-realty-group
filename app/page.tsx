@@ -21,14 +21,14 @@ export default async function HomePage() {
     <>
       <section className="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="overflow-hidden rounded-[36px] bg-slate-950 p-8 text-white shadow-2xl sm:p-10 lg:p-12">
-            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-white/80">
+          <div className="overflow-hidden rounded-[36px] bg-[linear-gradient(145deg,#04050d_0%,#090611_54%,#160828_100%)] p-8 text-white shadow-[0_32px_90px_rgba(10,5,26,0.45)] sm:p-10 lg:p-12">
+            <span className="rounded-full border border-violet-300/20 bg-violet-400/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-violet-100">
               Nairobi based • Nationwide reach
             </span>
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Find homes, land, rentals, and property support that fit real life.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
               Serena Property Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Mombasa, Nyeri, and Eldoret.
             </p>
 
@@ -40,22 +40,22 @@ export default async function HomePage() {
                 { label: "Cities covered", value: `${CITIES.length}` },
                 { label: "Contact channels", value: "Phone • Email • WhatsApp" },
               ].map((item) => (
-                <div key={item.label} className="rounded-[24px] border border-white/10 bg-white/5 p-5">
+                <div key={item.label} className="rounded-[24px] border border-violet-300/12 bg-white/5 p-5">
                   <p className="text-2xl font-semibold">{item.value}</p>
-                  <p className="mt-2 text-sm text-white/70">{item.label}</p>
+                  <p className="mt-2 text-sm text-violet-100/70">{item.label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[36px] border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 p-6">
+          <div className="overflow-hidden rounded-[36px] border border-violet-200/80 bg-white shadow-sm">
+            <div className="border-b border-violet-100 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Live preview</p>
+                  <p className="text-sm uppercase tracking-[0.24em] text-violet-700">Live preview</p>
                   <h3 className="mt-2 text-2xl font-semibold text-slate-950">Map of focus area</h3>
                 </div>
-                <Map className="h-8 w-8 text-slate-400" />
+                <Map className="h-8 w-8 text-violet-500" />
               </div>
             </div>
             <iframe title="Map" className="h-[430px] w-full" loading="lazy" src="https://www.google.com/maps?q=Nairobi%20Kenya&output=embed" />
@@ -70,7 +70,7 @@ export default async function HomePage() {
             title="A strong starting mix of homes, land, and rentals"
             body="This project ships with a real database structure. Add or edit listings from the admin dashboard once Supabase is connected."
           />
-          <Link href="/properties" className="hidden rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 md:inline-flex">
+          <Link href="/properties" className="hidden rounded-full border border-violet-200 bg-white px-5 py-3 text-sm font-medium text-violet-900 md:inline-flex">
             View all listings
           </Link>
         </div>

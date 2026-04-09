@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fcfcfb;
-  --foreground: #0f172a;
+  --background: #f6f2ff;
+  --foreground: #12091f;
+  --surface: #ffffff;
+  --surface-muted: #f1e8ff;
+  --purple-royal: #6d28d9;
+  --purple-soft: #8b5cf6;
+  --ink-dark: #050816;
 }
 
 html {
@@ -10,11 +15,23 @@ html {
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top left, rgba(139, 92, 246, 0.16), transparent 28%),
+    radial-gradient(circle at top right, rgba(109, 40, 217, 0.12), transparent 24%),
+    linear-gradient(180deg, #fcfaff 0%, var(--background) 100%);
   color: var(--foreground);
+}
+
+a {
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #94a3b8;
+  color: #9b8bb8;
+}
+
+::selection {
+  background: rgba(109, 40, 217, 0.22);
+  color: #14081f;
 }

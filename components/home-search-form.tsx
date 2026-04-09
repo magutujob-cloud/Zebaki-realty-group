@@ -31,7 +31,7 @@ export function HomeSearchForm({ listings }: Props) {
   }, [listings]);
 
   return (
-    <form action="/properties" className="mt-8 rounded-[28px] bg-white p-4 text-slate-950 sm:p-5">
+    <form action="/properties" className="mt-8 rounded-[28px] border border-violet-200/70 bg-white p-4 text-slate-950 shadow-[0_20px_60px_rgba(17,5,35,0.18)] sm:p-5">
       <input type="hidden" name="advanced" value={showAdvanced ? "1" : "0"} />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -85,7 +85,7 @@ export function HomeSearchForm({ listings }: Props) {
       </div>
 
       {showAdvanced ? (
-        <div className="mt-4 space-y-4 rounded-[24px] border border-slate-200 bg-slate-50/80 p-4">
+        <div className="mt-4 space-y-4 rounded-[24px] border border-violet-200 bg-violet-50/70 p-4">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <label className="block text-sm text-slate-700">
               <span className="mb-2 block font-medium">Area</span>
@@ -198,12 +198,12 @@ export function HomeSearchForm({ listings }: Props) {
         <button
           type="button"
           onClick={() => setShowAdvanced((current) => !current)}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm font-medium text-slate-700"
+          className="inline-flex items-center gap-2 rounded-full border border-violet-200 px-6 py-3 text-sm font-medium text-violet-900"
         >
           <ChevronDown className={`h-4 w-4 transition ${showAdvanced ? "rotate-180" : ""}`} />
           {showAdvanced ? "Hide advanced search" : "Advanced search"}
         </button>
-        <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white">
+        <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-violet-700 px-6 py-3 text-sm font-medium text-white shadow-[0_14px_32px_rgba(109,40,217,0.28)]">
           <Search className="h-4 w-4" />
           Search properties
         </button>
