@@ -4,7 +4,7 @@ import { getAllAgents, getFeaturedListings, getPublishedListings } from "@/lib/q
 import { AgentCard } from "@/components/agent-card";
 import { SectionHeading } from "@/components/section-heading";
 import { PropertyCard } from "@/components/property-card";
-import { CITIES } from "@/lib/constants";
+import { BRAND, CITIES } from "@/lib/constants";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import { splitPeople } from "@/lib/utils";
 import { HomeSearchForm } from "@/components/home-search-form";
@@ -29,7 +29,7 @@ export default async function HomePage() {
               Find homes, land, rentals, and property support that fit real life.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
-              Serena Property Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Mombasa, Nyeri, and Eldoret.
+              Serena Property Group helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Kiambu, and Nyandarua.
             </p>
 
             <HomeSearchForm listings={listings} />
@@ -150,7 +150,7 @@ export default async function HomePage() {
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/contact" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">Talk to our team</Link>
-              <a href="mailto:magutujob@gmail.com?subject=Property%20listing%20request" className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">Email us</a>
+              <a href={`mailto:${BRAND.email}?subject=Property%20listing%20request`} className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700">Email us</a>
             </div>
           </div>
         </div>

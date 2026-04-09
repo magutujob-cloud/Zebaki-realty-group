@@ -42,6 +42,7 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Contact</p>
           <div className="mt-4 space-y-3 text-sm text-violet-100/72">
             <a href={`tel:${BRAND.phone}`} className="block">{BRAND.displayPhone}</a>
+            <a href={`tel:${BRAND.additionalPhone}`} className="block">{BRAND.displayAdditionalPhone} (Additional)</a>
             <a href={`mailto:${BRAND.email}`} className="block break-all">{BRAND.email}</a>
             <a href={getWhatsappLink("Hello Serena Property Group.")} target="_blank" rel="noreferrer" className="block">WhatsApp chat</a>
             <p>Nairobi HQ</p>

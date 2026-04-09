@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { BRAND } from "@/lib/constants";
 import type { Agent } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
@@ -50,7 +51,7 @@ export function mapEmbedUrl(query: string) {
 }
 
 export function getWhatsappLink(message: string) {
-  return `https://wa.me/254742370125?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
 const leadershipKeywords = [

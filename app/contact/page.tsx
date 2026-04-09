@@ -26,23 +26,28 @@ export default async function ContactPage({
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <a href={`tel:${BRAND.phone}`} className="rounded-[24px] bg-slate-50 p-5">
               <Phone className="h-6 w-6 text-slate-500" />
-              <p className="mt-4 font-semibold text-slate-950">Phone</p>
+              <p className="mt-4 font-semibold text-slate-950">Main phone</p>
               <p className="mt-1 text-sm text-slate-600">{BRAND.displayPhone}</p>
             </a>
             <a href={`mailto:${BRAND.email}`} className="rounded-[24px] bg-slate-50 p-5">
               <Mail className="h-6 w-6 text-slate-500" />
-              <p className="mt-4 font-semibold text-slate-950">Email</p>
+              <p className="mt-4 font-semibold text-slate-950">Main email</p>
               <p className="mt-1 break-all text-sm text-slate-600">{BRAND.email}</p>
             </a>
-            <a href={getWhatsappLink("Hello Serena Property Group. I would like to speak with your team.")} target="_blank" rel="noreferrer" className="rounded-[24px] bg-slate-50 p-5">
+            <a
+              href={getWhatsappLink("Hello Serena Property Group. I would like to speak with your team.")}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[24px] bg-slate-50 p-5"
+            >
               <MessageCircle className="h-6 w-6 text-slate-500" />
               <p className="mt-4 font-semibold text-slate-950">WhatsApp</p>
               <p className="mt-1 text-sm text-slate-600">Quick property inquiries and follow-up</p>
             </a>
             <div className="rounded-[24px] bg-slate-50 p-5">
               <Clock3 className="h-6 w-6 text-slate-500" />
-              <p className="mt-4 font-semibold text-slate-950">Office</p>
-              <p className="mt-1 text-sm text-slate-600">Nairobi HQ • Add physical address once confirmed</p>
+              <p className="mt-4 font-semibold text-slate-950">Additional contact</p>
+              <p className="mt-1 text-sm text-slate-600">{BRAND.displayAdditionalPhone}</p>
             </div>
           </div>
         </div>
