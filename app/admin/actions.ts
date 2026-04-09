@@ -361,9 +361,24 @@ export async function deleteAgentAction(formData: FormData) {
   await requireAdmin();
   const supabase = createAdminClient();
   const id = String(formData.get("id") || "");
+  const { data: existingAgent } = await supabase
+    .from("agents")
+    .select("id, full_name")
+    .eq("id", id)
+    .maybeSingle();
+
+  const { error: detachError } = await supabase
+    .from("listings")
+    .update({ agent_id: null })
+    .eq("agent_id", id);
+  assertMutationSucceeded("detach agent from listings", detachError);
+
   const { error } = await supabase.from("agents").delete().eq("id", id);
   assertMutationSucceeded("delete agent", error);
   invalidate();
+  if (existingAgent) {
+    revalidatePath(getAgentPath(existingAgent));
+  }
   redirect("/admin");
 }
 

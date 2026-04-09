@@ -56,7 +56,7 @@ export default async function AdminDashboardPage() {
                       <Link href={`/admin/listings/${listing.id}/edit`} className="rounded-full border border-slate-200 px-3 py-1.5">Edit</Link>
                       <form action={deleteListingAction}>
                         <input type="hidden" name="id" value={listing.id} />
-                        <button type="submit" className="rounded-full border border-rose-200 px-3 py-1.5 text-rose-700">Delete</button>
+                        <button type="submit" className="cursor-pointer rounded-full border border-rose-200 px-3 py-1.5 text-rose-700">Delete</button>
                       </form>
                     </div>
                   </td>
@@ -86,7 +86,7 @@ export default async function AdminDashboardPage() {
                 <Link href={`/admin/agents/${agent.id}/edit`} className="rounded-full border border-slate-200 px-3 py-1.5 text-sm">Edit</Link>
                 <form action={deleteAgentAction}>
                   <input type="hidden" name="id" value={agent.id} />
-                  <button type="submit" className="rounded-full border border-rose-200 px-3 py-1.5 text-sm text-rose-700">Delete</button>
+                  <button type="submit" className="cursor-pointer rounded-full border border-rose-200 px-3 py-1.5 text-sm text-rose-700">Delete</button>
                 </form>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default async function AdminDashboardPage() {
                 <Link href={`/admin/blog/${post.id}/edit`} className="rounded-full border border-slate-200 px-3 py-1.5 text-sm">Edit</Link>
                 <form action={deleteBlogPostAction}>
                   <input type="hidden" name="id" value={post.id} />
-                  <button type="submit" className="rounded-full border border-rose-200 px-3 py-1.5 text-sm text-rose-700">Delete</button>
+                  <button type="submit" className="cursor-pointer rounded-full border border-rose-200 px-3 py-1.5 text-sm text-rose-700">Delete</button>
                 </form>
               </div>
             </div>
