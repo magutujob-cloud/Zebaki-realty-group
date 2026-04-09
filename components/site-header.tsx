@@ -12,7 +12,7 @@ const nav = [
   { href: "/", label: "Home" },
   { href: "/properties", label: "Listings" },
   { href: "/services", label: "Services" },
-  { href: "/agents", label: "Agents" },
+  { href: "/agents", label: "People" },
   { href: "/blog", label: "Insights" },
   { href: "/contact", label: "Contact" },
   { href: "/admin", label: "Admin" },
