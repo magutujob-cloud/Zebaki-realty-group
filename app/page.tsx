@@ -26,7 +26,7 @@ export default async function HomePage() {
               Nairobi based • Nationwide reach
             </span>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Find homes, land, rentals, and property support that fit real life.
+              Find commercial and residential properties for sale and to let
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
               Tyrian Properties helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Kiambu, and Nyandarua.
