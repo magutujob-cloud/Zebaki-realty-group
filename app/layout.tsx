@@ -5,7 +5,7 @@ import { getCustomerSession } from "@/lib/auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Serena Property Group",
+  title: "Tyrian",
   description: "Property sales, rentals, and management across major Kenyan cities.",
 };
 

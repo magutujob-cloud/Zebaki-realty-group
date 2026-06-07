@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "Serena Property Group",
+  name: "Tyrian",
   tagline: "Sales • Rentals • Management",
   city: "Nairobi",
   phone: "+254713975090",

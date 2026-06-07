@@ -12,7 +12,7 @@ export default async function AgentsPage() {
       <SectionHeading
         eyebrow="People"
         title="People"
-        body="Meet the people behind Serena Property Group. As your team grows, this page can continue to showcase everyone in one place."
+        body="Meet the people behind Tyrian. As your team grows, this page can continue to showcase everyone in one place."
       />
 
       <div className="mt-10">

@@ -1,6 +1,6 @@
-# Zebaki Realty Group — production starter
+# Tyrian - production starter
 
-This is a deployable **Next.js App Router + Supabase** real-estate project for **Zebaki Realty Group**. It includes:
+This is a deployable **Next.js App Router + Supabase** real-estate project for **Tyrian**. It includes:
 
 - public property website
 - listings, property detail pages, city pages, services, agents, and blog
