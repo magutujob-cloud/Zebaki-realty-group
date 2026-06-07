@@ -62,7 +62,7 @@ export function SiteHeader({ isSignedIn = false }: Props) {
             Saved in browser
           </Link>
           <a
-            href={getWhatsappLink("Hello Tyrian. I would like help finding a property.")}
+            href={getWhatsappLink("Hello Tyrian Properties. I would like help finding a property.")}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-violet-700 px-5 py-3 text-sm font-medium text-white shadow-[0_0_24px_rgba(109,40,217,0.35)]"
@@ -136,7 +136,7 @@ export function SiteHeader({ isSignedIn = false }: Props) {
               Call
             </a>
             <a
-              href={getWhatsappLink("Hello Tyrian. I would like help finding a property.")}
+              href={getWhatsappLink("Hello Tyrian Properties. I would like help finding a property.")}
               target="_blank"
               rel="noreferrer"
               className="flex w-full items-center justify-center gap-2 rounded-full bg-violet-700 px-5 py-3 text-sm font-medium text-white"

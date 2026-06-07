@@ -44,7 +44,7 @@ export function SiteFooter() {
             <a href={`tel:${BRAND.phone}`} className="block">{BRAND.displayPhone}</a>
             <a href={`tel:${BRAND.additionalPhone}`} className="block">{BRAND.displayAdditionalPhone} (Additional)</a>
             <a href={`mailto:${BRAND.email}`} className="block break-all">{BRAND.email}</a>
-            <a href={getWhatsappLink("Hello Tyrian.")} target="_blank" rel="noreferrer" className="block">WhatsApp chat</a>
+            <a href={getWhatsappLink("Hello Tyrian Properties.")} target="_blank" rel="noreferrer" className="block">WhatsApp chat</a>
             <p>Nairobi HQ</p>
           </div>
         </div>

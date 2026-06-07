@@ -25,7 +25,7 @@ export default async function PropertyDetailPage({
   const success = query.success === "1";
 
   const gallery = listing.gallery_urls?.length ? listing.gallery_urls : [listing.cover_image_url].filter(Boolean);
-  const brochureHref = `mailto:${BRAND.email}?subject=${encodeURIComponent(`Brochure request - ${listing.title}`)}&body=${encodeURIComponent(`Hello Tyrian,\n\nPlease send me the brochure for ${listing.title} in ${listing.area}, ${listing.city}.`)}`;
+  const brochureHref = `mailto:${BRAND.email}?subject=${encodeURIComponent(`Brochure request - ${listing.title}`)}&body=${encodeURIComponent(`Hello Tyrian Properties,\n\nPlease send me the brochure for ${listing.title} in ${listing.area}, ${listing.city}.`)}`;
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -91,8 +91,8 @@ export default async function PropertyDetailPage({
                 <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Take action</p>
                 <div className="mt-4 space-y-3">
                   <a href={`tel:${BRAND.phone}`} className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white"><Phone className="h-4 w-4" />Call now</a>
-                  <a href={getWhatsappLink(`Hello Tyrian. I am interested in ${listing.title} in ${listing.area}, ${listing.city}.`)} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"><MessageCircle className="h-4 w-4" />WhatsApp</a>
-                  <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Viewing request - ${listing.title}`)}&body=${encodeURIComponent(`Hello Tyrian,\n\nI would like to book a viewing for ${listing.title} in ${listing.area}, ${listing.city}.`)}`} className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"><CalendarDays className="h-4 w-4" />Book viewing</a>
+                  <a href={getWhatsappLink(`Hello Tyrian Properties. I am interested in ${listing.title} in ${listing.area}, ${listing.city}.`)} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"><MessageCircle className="h-4 w-4" />WhatsApp</a>
+                  <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Viewing request - ${listing.title}`)}&body=${encodeURIComponent(`Hello Tyrian Properties,\n\nI would like to book a viewing for ${listing.title} in ${listing.area}, ${listing.city}.`)}`} className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"><CalendarDays className="h-4 w-4" />Book viewing</a>
                   <a href={brochureHref} className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"><Download className="h-4 w-4" />Request brochure</a>
                 </div>
               </div>

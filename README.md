@@ -1,6 +1,6 @@
-# Tyrian - production starter
+# Tyrian Properties - production starter
 
-This is a deployable **Next.js App Router + Supabase** real-estate project for **Tyrian**. It includes:
+This is a deployable **Next.js App Router + Supabase** real-estate project for **Tyrian Properties**. It includes:
 
 - public property website
 - listings, property detail pages, city pages, services, agents, and blog

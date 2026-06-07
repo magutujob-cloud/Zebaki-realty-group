@@ -29,7 +29,7 @@ export default async function HomePage() {
               Find homes, land, rentals, and property support that fit real life.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
-              Tyrian helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Kiambu, and Nyandarua.
+              Tyrian Properties helps buyers, tenants, investors, and property owners across Nairobi, Nakuru, Kisumu, Kisii, Kiambu, and Nyandarua.
             </p>
 
             <HomeSearchForm listings={listings} />
@@ -85,7 +85,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <SectionHeading
-            eyebrow="Why Tyrian"
+            eyebrow="Why Tyrian Properties"
             title="Built for practical property journeys, not just beautiful pages"
             body="The stack supports search-led discovery, real admin auth, persistent data, image storage, and clear paths for buyers, tenants, investors, and owners."
           />

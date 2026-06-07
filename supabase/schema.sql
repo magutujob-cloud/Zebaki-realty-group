@@ -100,7 +100,7 @@ create table if not exists public.blog_posts (
   excerpt text,
   content text,
   cover_image_url text,
-  author_name text default 'Tyrian',
+  author_name text default 'Tyrian Properties',
   read_time_minutes integer default 4,
   published boolean not null default true,
   published_at timestamptz,

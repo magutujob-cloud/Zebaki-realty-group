@@ -5,7 +5,7 @@ import { getCustomerSession } from "@/lib/auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tyrian",
+  title: "Tyrian Properties",
   description: "Property sales, rentals, and management across major Kenyan cities.",
 };
 

@@ -405,7 +405,7 @@ export async function createBlogPostAction(formData: FormData) {
     excerpt: parsed.excerpt,
     content: parsed.content,
     cover_image_url: parsed.cover_image_url || null,
-    author_name: "Tyrian",
+    author_name: "Tyrian Properties",
     read_time_minutes: parsed.read_time_minutes || 4,
     published: parsed.published ?? true,
     published_at: parsed.published ? new Date().toISOString() : null,

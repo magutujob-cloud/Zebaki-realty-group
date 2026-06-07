@@ -7,7 +7,7 @@ export function AdminNav() {
     <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
       <div>
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Admin</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Tyrian dashboard</h1>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Tyrian Properties dashboard</h1>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
